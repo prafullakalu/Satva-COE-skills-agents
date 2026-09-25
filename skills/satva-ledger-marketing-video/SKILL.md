@@ -127,6 +127,8 @@ ffmpeg -i video-build/satva-sizzle/renders/picture.mp4 -i 08_final/satvaLedger_f
   on-screen-label fix (checked by diff against the original build).
 - ✅ `music.py` produces the 82.57 s, 48 kHz stereo original score (run with a throwaway `ffmpeg`).
 - ✅ `mix.py` creates its output folders and stops only at the expected missing voice input.
-- ⚠️ **Not run:** `gen_voice.py`, `gen_sfx.py`, `mix.py` past that point, `analyze.py`, `hyperframes render` and the
-  final mux — they need an ElevenLabs key and credits. Treat them as the original working scripts, lightly
-  ported (paths, `ffmpeg` lookup, missing folder creation), and not re-verified end to end here.
+- ✅ `hyperframes check` passes (0 errors) and `hyperframes render` completes all 2,477 frames; muxing the original
+  final audio gives the 82.57 s video in `examples/satva-ledger-video/` (picture within 42 dB PSNR of the original).
+- ⚠️ **Not run:** `gen_voice.py`, `gen_sfx.py`, `mix.py` past that point and `analyze.py` — they need an ElevenLabs key
+  and credits. Treat them as the original working scripts, lightly ported (paths, `ffmpeg` lookup, missing folder
+  creation), and not re-verified end to end here.

@@ -30,6 +30,14 @@ section "Make it your own brand").
 | [ElevenLabs](https://elevenlabs.io) API | voice and sound effects | service terms apply; free-plan output is non-commercial and requires attribution — which is why no generated audio or rendered video is shipped |
 | NumPy, SciPy, FFmpeg | audio synthesis and mastering (sizzle pipeline) | BSD-3-Clause / BSD-3-Clause / LGPL-2.1+ or GPL — installed by you, not bundled |
 
+## The example video
+
+`examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4` is the Satva Ledger promo. Its voice and sound effects
+were generated with the ElevenLabs API on a **free plan**: that output is non-commercial and requires an
+"elevenlabs.io" credit, which the video shows on its end card. Do not reuse the audio commercially unless you
+have generated your own on a paid plan. The score is original (synthesised in code). Figures are QuickBooks
+Online sandbox data. The video is Satva Solutions' own marketing content and is not covered by the MIT licence.
+
 ## Illustrations and sample data
 
 The screens in `skills/satva-guide-gif/examples/` and `examples/setup-guide-sample/` are neutral illustrations

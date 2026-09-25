@@ -277,7 +277,7 @@ scene("end", T(END), DUR, "ch", `
   <div id="e2" class="abs tt" style="top:650px;font-size:64px;font-weight:600;color:var(--blue)">One agent for everything.</div>
   ${mascot("mX",1440,560,280)}
   <div id="e3" class="abs tt" style="top:760px;font-size:38px;font-weight:600;color:var(--muted)">Your own trusted, smart agent.</div>
-  <div class="abs tt" style="top:960px;font-size:22px;font-weight:600;color:var(--muted)">Sandbox data. Demo figures.</div>`);
+  <div class="abs tt" style="top:960px;font-size:22px;font-weight:600;color:var(--muted)">Sandbox data. Demo figures. Voice and sound effects: ElevenLabs (elevenlabs.io).</div>`);
 tw.push(`tl.from("#lg",{opacity:0,y:20,duration:.5,ease:"power2.out"},${T(END) + 0.1});`);
 tw.push(`tl.from("#e1",{opacity:0,y:24,duration:.5,ease:"power2.out"},${T(END) + 0.5});`);
 tw.push(`tl.from("#e2",{opacity:0,y:20,duration:.5,ease:"power2.out"},${T(END + 2)});`);
