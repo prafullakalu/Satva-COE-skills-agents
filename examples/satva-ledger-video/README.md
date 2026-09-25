@@ -3,7 +3,7 @@
 `Satva-Ledger-Sizzle-82s.mp4` · 82.6 s · 1920 × 1080 · 30 fps · H.264 + AAC
 
 The promo for the Satva Ledger accounting agent, made with
-[`satva-ledger-marketing-video`](../../skills/satva-ledger-marketing-video/SKILL.md). It is embedded and playable at the top of the
+[`satva-ledger-marketing-video`](../../skills/satva-ledger-marketing-video/SKILL.md). Its preview is at the top of the
 [main README](../../README.md).
 
 | | |

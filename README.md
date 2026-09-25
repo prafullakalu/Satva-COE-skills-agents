@@ -18,11 +18,11 @@
 
 ### ▶ Watch: the Satva Ledger marketing video
 
-<video src="https://github.com/prafullakalu/Satva-COE-skills-agents/raw/main/examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4" poster="https://github.com/prafullakalu/Satva-COE-skills-agents/raw/main/examples/satva-ledger-video/Satva-Ledger-Sizzle-poster.png" controls muted playsinline width="100%">
-  Your viewer does not play embedded video — <a href="examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4">download the MP4</a>.
-</video>
+<a href="examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4"><img src="examples/satva-ledger-video/Satva-Ledger-Sizzle-preview.gif" alt="Preview of the Satva Ledger marketing video: the mascot reviews a purchase, asks for approval, finds unused vendor credits" width="100%"></a>
 
-<sub>82 seconds · 1080p · made with <a href="skills/satva-ledger-marketing-video/SKILL.md"><code>satva-ledger-marketing-video</code></a>. Demo figures from a QuickBooks Online sandbox; voice and sound effects by <a href="https://elevenlabs.io">ElevenLabs</a>; the score is synthesised in code. <a href="examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4">Direct link to the MP4</a>.</sub>
+<b><a href="examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4">▶ Click to play the full 82-second video, with sound</a></b>
+
+<sub>The animation above is a silent 28-second preview; the link opens the full video in GitHub's player. 1080p · made with <a href="skills/satva-ledger-marketing-video/SKILL.md"><code>satva-ledger-marketing-video</code></a>. Demo figures from a QuickBooks Online sandbox; voice and sound effects by <a href="https://elevenlabs.io">ElevenLabs</a>; the score is synthesised in code.</sub>
 
 </div>
 
@@ -57,7 +57,7 @@ Anybody or any organisation can use them (MIT). To use your own logo and colours
 | **Annotated screenshot** — numbered rings, 2880 × 1800 | <img src="docs/img/s01-approve.png" alt="Screenshot with numbered rings" width="420"> |
 | **Finished PDF** — banner, footer, cover, Version History<br>[`Satva-Guide-Sample.pdf`](examples/setup-guide-sample/Satva-Guide-Sample.pdf) | <img src="docs/img/pdf-cover.png" alt="PDF cover page" width="300"> |
 
-Also in [`examples/`](examples/): the [Satva Ledger marketing video](examples/satva-ledger-video/) (playable at the top of this page), a [`satva-doc` sample](examples/satva-doc-sample/How-The-Guide-Pipeline-Works.doc) and two video briefs in [`skills/feature-launch-video/examples/`](skills/feature-launch-video/examples/).
+Also in [`examples/`](examples/): the [Satva Ledger marketing video](examples/satva-ledger-video/) (preview and link at the top of this page), a [`satva-doc` sample](examples/satva-doc-sample/How-The-Guide-Pipeline-Works.doc) and two video briefs in [`skills/feature-launch-video/examples/`](skills/feature-launch-video/examples/).
 
 ---
 
@@ -303,7 +303,7 @@ Satva-COE-skills-agents/
 │       └── docs/                     approved claims · beat sheet
 ├── examples/
 │   ├── setup-guide-sample/           the finished PDF, GIF, storyboard, screenshots + sources
-│   ├── satva-ledger-video/           the 82 s Satva Ledger marketing video (MP4) + poster
+│   ├── satva-ledger-video/           the 82 s Satva Ledger marketing video (MP4) + preview GIF
 │   └── satva-doc-sample/             a sample internal .doc
 └── docs/img/                         README images
 ```
