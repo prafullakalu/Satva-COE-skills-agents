@@ -6,3 +6,6 @@ __pycache__/
 gif/frames/
 .DS_Store
 skills/feature-launch-video/scripts/shared-assets/
+
+# local tooling telemetry
+.planning/
