@@ -26,13 +26,14 @@
 
 ## What's inside
 
-Three [Claude Code skills](https://docs.claude.com/en/docs/claude-code/skills). Install them once and Claude picks the right one from what you ask.
+Four [Claude Code skills](https://docs.claude.com/en/docs/claude-code/skills). Install them once and Claude picks the right one from what you ask.
 
 | Skill | Produces | For whom | Say something like |
 |---|---|---|---|
 | 📘 **[`satva-guide-gif`](skills/satva-guide-gif/SKILL.md)** | Annotated screenshots · narrated demo **GIF** · branded A4 **PDF** guide | End users and clients of a shipped feature | *"Create a setup guide PDF and demo GIF for the billing feature."* |
 | 📝 **[`satva-doc`](skills/satva-doc/SKILL.md)** | Brief plain-black Word **`.doc`** | Your own team — handovers, "how we built it" | *"Write a satva doc explaining how the sync works."* |
 | 🎬 **[`feature-launch-video`](skills/feature-launch-video/SKILL.md)** | Marketing / launch **video** (MP4) with original voice, music and SFX | Prospects and customers | *"Make a 30-second launch video for our bank-import feature."* |
+| 🎞️ **[`satva-ledger-marketing-video`](skills/satva-ledger-marketing-video/SKILL.md)** | The full **82-second sizzle** for the Satva Ledger accounting agent — a reference pipeline to fork | Marketing team | *"Rebuild the Satva Ledger sizzle video."* · *"Make a hero video like it for our next product."* |
 
 Anybody or any organisation can use them (MIT). To use your own logo and colours, see [Make it your own brand](#make-it-your-own-brand).
 
@@ -91,6 +92,23 @@ Not a template with blanks left in: it reads the real user flow, writes a **`bri
 - **Original audio only** — voice and SFX via ElevenLabs, the score synthesised locally in code, mixed to −14 LUFS with ducking, then *measured* by `analyze.py`. No copyrighted reference tracks, ever.
 - **16:9, 9:16 or 1:1**, 25–45 s sweet spot.
 
+### 🎞️ `satva-ledger-marketing-video` — the full sizzle, as a pipeline you can fork
+
+The original hand-built pipeline behind the **Satva Ledger** (AI accounting agent) promo: intro → six chapters
+→ "all your systems" → end card, with a mascot and sound cued to the beat. Where `feature-launch-video` is a
+brief-driven generator for *any* feature, this is the **worked reference for a longer hero video** — you edit
+the generator and the voice script.
+
+- **Generator, not hand-written HTML** — `build-sizzle.mjs` builds the whole HyperFrames composition (scenes, timings, cues) from data; `sizzle-mascot.mjs` is the original SVG mascot (moods, bob, blink, wave, hop).
+- **Audio pipeline** — 25 ElevenLabs voice lines placed so key words land on visual beats, custom SFX, an **original score synthesised in code** (115 BPM), a mix that ducks music under speech and masters to −14 LUFS, and `analyze.py` for measured QA.
+- **Marketing-safety docs** — the approved-claims list and the beat sheet ([`docs/`](skills/satva-ledger-marketing-video/docs/)).
+- **Deliberately not included:** the rendered MP4s and audio (made on a free ElevenLabs plan — non-commercial). Regenerate with your own key.
+
+| Pick this one when… | Skill |
+|---|---|
+| a single feature, 25–45 s, no code edits | `feature-launch-video` |
+| a multi-chapter hero / sizzle, mascot, hand-cued sound | `satva-ledger-marketing-video` |
+
 ---
 
 ## Install
@@ -145,7 +163,7 @@ Start a new Claude Code session and ask:
 
 > *"Which skills do you have for Satva guides, docs and launch videos?"*
 
-It should list `satva-guide-gif`, `satva-doc` and `feature-launch-video`. Re-run the installer any time to upgrade in place.
+It should list `satva-guide-gif`, `satva-doc`, `feature-launch-video` and `satva-ledger-marketing-video`. Re-run the installer any time to upgrade in place.
 
 ---
 
@@ -219,6 +237,21 @@ ffmpeg -i renders/picture.mp4 -i final/audio_final.wav -map 0:v:0 -map 1:a:0 -c:
 
 `brief.json` fields are documented in [`references/brief-schema.md`](skills/feature-launch-video/references/brief-schema.md). Free-plan ElevenLabs audio is non-commercial and needs an "elevenlabs.io" credit — check your plan before publishing.
 
+### D · Fork the Satva Ledger sizzle for your next product
+
+> *"Use the satva-ledger-marketing-video skill to build an 80-second hero video for **<product>**."*
+
+Or by hand — copy the pipeline to a workspace first (its scripts write output folders next to themselves):
+
+```bash
+cp -r ~/.claude/skills/satva-ledger-marketing-video/pipeline my-video && cd my-video
+cd video-build && node build-sizzle.mjs          # 1. composition → satva-sizzle/index.html
+python ../audio-pipeline/music.py                # original score, no API key needed (needs ffmpeg + numpy/scipy)
+```
+
+Then edit the story in `build-sizzle.mjs` and the voice lines in `audio-pipeline/gen_voice.py`, and follow the
+[full steps](skills/satva-ledger-marketing-video/SKILL.md#steps) (render, voice, SFX, mix, mux).
+
 ---
 
 ## Make it your own brand
@@ -247,12 +280,17 @@ Satva-COE-skills-agents/
 │   │   ├── starter/                  a working project to copy: capture · frames · build · body · doc.json
 │   │   └── examples/                 neutral illustration pages + a complete guide body
 │   ├── satva-doc/SKILL.md            the internal .doc house style
-│   └── feature-launch-video/
-│       ├── SKILL.md                  7-step workflow, rules, limits
-│       ├── scripts/                  compose.mjs · icons · mascot · audio/ (voice, sfx, music, mix, analyze)
-│       ├── themes/                   ledger-clean · cinematic-dark · mascot-playful
-│       ├── references/               brief schema · why no copyrighted audio
-│       └── examples/                 bank-import (16:9) · smart-nudges (9:16) briefs
+│   ├── feature-launch-video/
+│   │   ├── SKILL.md                  7-step workflow, rules, limits
+│   │   ├── scripts/                  compose.mjs · icons · mascot · audio/ (voice, sfx, music, mix, analyze)
+│   │   ├── themes/                   ledger-clean · cinematic-dark · mascot-playful
+│   │   ├── references/               brief schema · why no copyrighted audio
+│   │   └── examples/                 bank-import (16:9) · smart-nudges (9:16) briefs
+│   └── satva-ledger-marketing-video/
+│       ├── SKILL.md                  the sizzle pipeline: steps, forking guide, rules
+│       ├── pipeline/video-build/     build-sizzle.mjs · sizzle-mascot.mjs · composition scaffold
+│       ├── pipeline/audio-pipeline/  voice · sfx · original score · mix · QA
+│       └── docs/                     approved claims · beat sheet
 ├── examples/
 │   ├── setup-guide-sample/           the finished PDF, GIF, storyboard, screenshots + sources
 │   └── satva-doc-sample/             a sample internal .doc
@@ -272,7 +310,8 @@ Nothing below is bundled unless noted; see [`NOTICE.md`](NOTICE.md) for licences
 | Video composition and render | [HyperFrames](https://github.com/heygen-com/hyperframes) (HeyGen) | `npx hyperframes@0.8.58` on demand |
 | Video animation | [GSAP](https://gsap.com) | downloaded on first `compose.mjs` run (GreenSock licence), not redistributed here |
 | Voice, sound effects | [ElevenLabs](https://elevenlabs.io) API | your own API key |
-| Fonts | Mulish, Roboto Mono | bundled, SIL OFL 1.1 |
+| Fonts | Mulish, Roboto Mono, Geist Mono | bundled, SIL OFL 1.1 |
+| Audio DSP (sizzle pipeline) | [NumPy](https://numpy.org), [SciPy](https://scipy.org), [FFmpeg](https://ffmpeg.org) | `pip install numpy scipy` · install `ffmpeg` |
 
 The HyperFrames, ElevenLabs and Remotion *agent skills* are optional extras from their vendors and are **not** part of this repo. `feature-launch-video` only needs the `hyperframes` npm CLI, which `npx` fetches.
 
@@ -285,10 +324,11 @@ Tested on **Windows 10 · Node 24 · Python 3.12 · Chrome**:
 - ✅ Starter pipeline end to end from a clean copy: screenshots → GIF frames → GIF + storyboard → PDF (about 30 s).
 - ✅ `install.ps1` and `install.sh`, including a re-run over an existing install (no nested folders).
 - ✅ `feature-launch-video`: `compose.mjs` on both example briefs (`ledger-clean`, `cinematic-dark`); `hyperframes check` reports only the expected `audio_src_not_found`, which clears once audio is generated.
+- ✅ `satva-ledger-marketing-video`: `build-sizzle.mjs` regenerates the original composition exactly (diffed), and `music.py` produces the 82.57 s original score.
 
 Not tested — please tell us if you hit something:
 
-- ⚠️ Video **audio generation, render and mux** (needs an ElevenLabs key and `ffmpeg`; not run to avoid spending credits).
+- ⚠️ Video **audio generation, render and mux** for both video skills — the ElevenLabs steps (`gen_voice`, `gen_sfx`, full `mix`), `hyperframes render` and the final mux were not run, to avoid spending credits. The sizzle scripts were lightly ported (paths, `ffmpeg` lookup, missing folders) and are not re-verified end to end.
 - ⚠️ macOS and Linux runs (the scripts are cross-platform; only Windows was exercised).
 - ⚠️ The Chromium fallback in `build-pdf.mjs` when Chrome is absent (Chrome was present on the test machine).
 
