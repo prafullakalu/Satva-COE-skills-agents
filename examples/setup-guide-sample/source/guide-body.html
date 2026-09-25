@@ -1,0 +1,75 @@
+<!-- Body only: start at <h2>. No <html>, <head>, <style> or <h1> - the cover page supplies the title. -->
+<h2>What this sample shows</h2>
+
+<p>This is a <b>format sample</b>, not a real product guide. It was produced by the <code>satva-guide-gif</code> skill so you can check the Satva house format before the skill is uploaded: the blue SATVA banner in the header, the contact bar and page numbers in the footer, the cover page with a Version History table, Mulish text, callout screenshots, tip and warning boxes, and tables.</p>
+
+<div class="tip">
+  <p>The screens below are the skill's own neutral illustration pages. They are captured the same way a real app would be, with numbered rings drawn around the parts the text refers to.</p>
+</div>
+
+<h2>Format at a glance</h2>
+
+<table>
+  <tr><th>Item</th><th>What the skill does</th></tr>
+  <tr><td>Page</td><td>A4, margins 30 mm top, 22 mm bottom, 18 mm left and right</td></tr>
+  <tr><td>Header</td><td>Blue SATVA SOLUTIONS banner image on every page</td></tr>
+  <tr><td>Footer</td><td>Contact bar image, project and subtitle, and &ldquo;Page N of M&rdquo;</td></tr>
+  <tr><td>Font</td><td>Mulish (regular, bold, italic embedded); code in Roboto Mono</td></tr>
+  <tr><td>Screenshots</td><td>1440 &times; 900 viewport at 2&times; scale, so 2880 &times; 1800 pixels</td></tr>
+  <tr><td>Callouts</td><td>3 px black ring with a white halo and a numbered black badge</td></tr>
+  <tr><td>Image frame</td><td>1 px light grey-blue border around each screenshot in the PDF</td></tr>
+</table>
+
+<h2>1. Approve the permissions</h2>
+
+<p>The first screenshot shows a permission screen. Ring <b>1</b> marks the list of access being requested and ring <b>2</b> marks the button that grants it.</p>
+
+<figure class="keep">
+  <img src="shots/s01-approve.png" alt="Permission request screen with two numbered rings">
+  <figcaption>Ring 1 &mdash; the permissions list. Ring 2 &mdash; <b>Install app</b>. This is an illustration of the approval step; a real guide never films a vendor's own screen.</figcaption>
+</figure>
+
+<div class="warn">
+  <p>Never put a real token, key or customer record in a screenshot. Capture against a seeded demo account with fake values only.</p>
+</div>
+
+<h2>2. Paste the configuration</h2>
+
+<p>The second screenshot shows a config file. Ring <b>1</b> marks the block to paste and ring <b>2</b> marks the save reminder.</p>
+
+<figure class="keep">
+  <img src="shots/s02-config.png" alt="Config file with two numbered rings">
+  <figcaption>Ring 1 &mdash; the configuration block. Ring 2 &mdash; the status line that confirms the save.</figcaption>
+</figure>
+
+<p>Code and commands use the code style:</p>
+
+<pre>{
+  "mcpServers": {
+    "Example": { "url": "https://example.invalid/mcp" }
+  }
+}</pre>
+
+<h2>If something goes wrong</h2>
+
+<table>
+  <tr><th>What you see</th><th>Why it happens</th><th>What to do</th></tr>
+  <tr><td><code>Example error text</code></td><td>Sample row. In a real guide, error strings are copied from the source code, never paraphrased.</td><td>Follow the fix given for that exact message.</td></tr>
+</table>
+
+<h2>Watch the setup</h2>
+
+<p>The narrated GIF ships next to this PDF as <code>Satva-Guide-Sample-Demo.gif</code>. Here is its storyboard.</p>
+
+<figure class="strip keep">
+  <img src="storyboard.png" alt="Storyboard of the demo GIF">
+  <figcaption>Six stills from the narrated walkthrough: review, approve, paste, save.</figcaption>
+</figure>
+
+<h2>Quick reference</h2>
+
+<ul>
+  <li>Write body-only HTML: start at <code>&lt;h2&gt;</code>, no <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;style&gt;</code> or <code>&lt;h1&gt;</code>. The cover supplies the title.</li>
+  <li>Classes available: <code>.tip</code>, <code>.warn</code>, <code>.break</code>, <code>.keep</code>, <code>figure.wide</code>, <code>figure.strip</code>.</li>
+  <li>Ship the PDF and the GIF together, for example under <code>docs/guides/&lt;Name&gt;/</code>.</li>
+</ul>

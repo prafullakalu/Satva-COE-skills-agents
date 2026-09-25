@@ -1,0 +1,57 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Approve access</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #eef2f0; }
+  body {
+    display: flex; align-items: center; justify-content: center;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif; color: #14201a;
+  }
+  .card {
+    width: 620px; background: #fff; border-radius: 16px; padding: 30px 34px 26px;
+    border: 1px solid #d8e2dc; box-shadow: 0 26px 60px rgba(12, 40, 28, .16);
+    margin-bottom: 60px; /* clear of the caption bar */
+  }
+  .brand { font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+           color: #0b7a52; font-weight: 700; }
+  h1 { font-size: 25px; margin: 8px 0 6px; }
+  p.sub { margin: 0 0 18px; color: #5b6b63; font-size: 15px; }
+  ul { list-style: none; margin: 0 0 22px; padding: 0; }
+  li { display: flex; gap: 10px; align-items: center; padding: 9px 0;
+       border-bottom: 1px solid #eef2f0; font-size: 16px; }
+  li:last-child { border-bottom: none; }
+  .tick { width: 20px; height: 20px; border-radius: 50%; background: #0b7a52;
+          color: #fff; font-size: 13px; line-height: 20px; text-align: center;
+          flex: none; opacity: 0; transition: opacity .12s; }
+  li.on .tick { opacity: 1; }
+  .row { display: flex; gap: 12px; }
+  .btn { border: none; border-radius: 999px; padding: 13px 26px; font-size: 16px;
+         font-weight: 600; background: #0b7a52; color: #fff; }
+  .btn.sec { background: #fff; color: #45564e; border: 1px solid #d8e2dc; }
+  .note { margin: 16px 0 0; font-size: 13px; color: #7b8a83; }
+</style>
+
+<div class="card">
+  <div class="brand">Store permission request</div>
+  <h1>Example MCP wants access</h1>
+  <p class="sub">demo-store.example.com</p>
+  <ul id="perms">
+    <li><span class="tick">&check;</span> Read and write products and inventory</li>
+    <li><span class="tick">&check;</span> Read and write orders and draft orders</li>
+    <li><span class="tick">&check;</span> Read and write customers</li>
+    <li><span class="tick">&check;</span> Read locations, markets and analytics</li>
+  </ul>
+  <div class="row">
+    <button class="btn" id="approve">Install app</button>
+    <button class="btn sec">Cancel</button>
+  </div>
+  <p class="note">This is an illustration of the approval step. The real screen is shown by the provider.</p>
+</div>
+
+<script>
+  // Reveal ticks one at a time so the animation can "read" the permission list.
+  const items = [...document.querySelectorAll("#perms li")];
+  window.PERM_COUNT = items.length;
+  window.showPerms = (k) => items.forEach((li, i) => li.classList.toggle("on", i < k));
+  window.showPerms(0);
+</script>

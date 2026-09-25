@@ -1,0 +1,76 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+      xmlns:w="urn:schemas-microsoft-com:office:word"
+      xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
+<title>How the guide pipeline works</title>
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
+<style>
+  @page { size: A4; margin: 2.2cm; }
+  body { font-family: "Mulish", "Segoe UI", sans-serif; color: #000; font-size: 11pt; line-height: 1.55; }
+  h1 { font-size: 20pt; font-weight: bold; margin: 0 0 4pt 0; }
+  h2 { font-size: 15pt; font-weight: bold; margin: 18pt 0 6pt 0; }
+  h3 { font-size: 12.5pt; font-weight: bold; margin: 14pt 0 4pt 0; }
+  p, li { font-size: 11pt; }
+  pre, code { font-family: "Roboto Mono", "Roboto", Consolas, monospace; font-size: 9.5pt; color: #000; }
+  pre { border: 1pt solid #000; padding: 8pt 10pt; margin: 6pt 0 10pt 0; white-space: pre-wrap; }
+  table { border-collapse: collapse; margin: 6pt 0 10pt 0; width: 100%; }
+  th, td { border: 1pt solid #000; padding: 4pt 8pt; font-size: 10.5pt; text-align: left; vertical-align: top; }
+  th { font-weight: bold; }
+  hr { border: none; border-top: 1pt solid #000; margin: 14pt 0; }
+</style>
+</head>
+<body>
+  <h1>How the guide pipeline works</h1>
+  <p class="subtitle">A short internal note in the <code>satva-doc</code> house style: all black, Mulish, no colour.</p>
+  <hr>
+
+  <h2>1. What is it, in simple words?</h2>
+  <p>The <b>guide pipeline</b> turns a running app into a finished guide. It takes screenshots, films a short
+  walkthrough, and prints everything into a branded PDF. You run one command and get all three files.</p>
+  <table>
+    <tr><th>Stage</th><th>What it makes</th><th>Script</th></tr>
+    <tr><td>Screenshots</td><td>PNG files with numbered rings</td><td><code>callouts.mjs</code></td></tr>
+    <tr><td>Walkthrough</td><td>Animated GIF and a storyboard</td><td><code>cursor-demo.mjs</code>, <code>build-gif.py</code></td></tr>
+    <tr><td>Guide</td><td>A4 PDF with banner, footer and cover</td><td><code>build-pdf.mjs</code></td></tr>
+  </table>
+
+  <h2>2. What this note covers</h2>
+  <p>Where each part lives, and the one command that runs them all. It is an <b>internal</b> note. A guide that
+  goes to a client is built with <code>satva-guide-gif</code>, because that one carries the Satva banner.</p>
+
+  <h2>3. Step-by-step flow</h2>
+  <h3>Step 1: copy the starter</h3>
+  <pre>cp -r ~/.claude/skills/satva-guide-gif/starter my-guide
+cd my-guide &amp;&amp; npm install</pre>
+  <h3>Step 2: run it</h3>
+  <pre>npm run build</pre>
+  <p>This runs <code>build.mjs</code>, which calls the four stages in order and stops at the first failure.</p>
+
+  <h2>4. How it works end to end</h2>
+  <table>
+    <tr><th>Action</th><th>Layer</th><th>What guards it</th></tr>
+    <tr><td>Ring an element</td><td><code>callouts.mjs</code></td><td><code>report()</code> lists every selector that missed</td></tr>
+    <tr><td>Encode the GIF</td><td><code>build-gif.py</code></td><td>Size ladder, then a check that the file is animated and under 12 MB</td></tr>
+    <tr><td>Print the PDF</td><td><code>build-pdf.mjs</code></td><td>Uses Chrome if present, otherwise the bundled Chromium</td></tr>
+  </table>
+
+  <h2>5. What this gave us</h2>
+  <ul>
+    <li><b>One command</b> instead of four hand-run scripts.</li>
+    <li><b>Same look every time</b>: header, footer, fonts and ring style never drift.</li>
+    <li><b>No secrets in pictures</b>: the pipeline runs on fake demo data by design.</li>
+  </ul>
+
+  <h2>6. Where everything lives</h2>
+  <table>
+    <tr><th>Path</th><th>Purpose</th></tr>
+    <tr><td><code>skills/satva-guide-gif/scripts/</code></td><td>The four pipeline scripts</td></tr>
+    <tr><td><code>skills/satva-guide-gif/assets/</code></td><td>Banner, footer bar and fonts</td></tr>
+    <tr><td><code>skills/satva-guide-gif/starter/</code></td><td>A working project to copy</td></tr>
+    <tr><td><code>examples/setup-guide-sample/</code></td><td>The finished PDF, GIF and screenshots</td></tr>
+  </table>
+
+  <p><b>In one sentence:</b> one command turns a running app into a branded PDF guide with a narrated GIF.</p>
+</body>
+</html>

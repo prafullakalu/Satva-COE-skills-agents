@@ -1,0 +1,97 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>mcp.json</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background: #0d1017; }
+  body {
+    display: flex; align-items: center; justify-content: center;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .panel {
+    width: 800px; border-radius: 12px; overflow: hidden;
+    background: #161a23; border: 1px solid #2a3040;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .55);
+    margin-bottom: 60px; /* clear of the caption bar */
+  }
+  .titlebar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; background: #1e232f; border-bottom: 1px solid #2a3040;
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; background: #3a4254; }
+  .name {
+    margin-left: 6px; color: #cdd6e6; font-size: 15px; letter-spacing: .3px;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  .body { padding: 18px 0 22px; }
+  pre { margin: 0; font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+        font-size: 17px; line-height: 1.65; }
+  .ln { display: block; padding: 0 22px; white-space: pre; color: #c9d4e6; }
+  .ln[hidden] { display: none; }
+  .k { color: #7fd1ff; }
+  .s { color: #a3e59b; }
+  .p { color: #8892a6; }
+  .caret {
+    display: inline-block; width: 9px; height: 19px; vertical-align: -4px;
+    background: #7fd1ff; animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .status {
+    padding: 10px 22px; border-top: 1px solid #2a3040; background: #1a1f2b;
+    color: #7f8ba1; font-size: 14px;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  .status.done { color: #a3e59b; }
+</style>
+
+<div class="panel">
+  <div class="titlebar">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <span class="name">mcp.json</span>
+  </div>
+  <div class="body"><pre id="code"></pre></div>
+  <div class="status" id="status">config file &mdash; save, then restart your AI tool</div>
+</div>
+
+<script>
+  // Neutral illustration of a config file. Deliberately not modelled on any
+  // real editor's chrome or branding.
+  const LINES = [
+    '<span class="p">{</span>',
+    '  <span class="k">"mcpServers"</span><span class="p">: {</span>',
+    '    <span class="k">"Example MCP"</span><span class="p">: {</span>',
+    '      <span class="k">"url"</span><span class="p">:</span> <span class="s">"https://mcp.example.com/mcp"</span><span class="p">,</span>',
+    '      <span class="k">"headers"</span><span class="p">: {</span>',
+    '        <span class="k">"Authorization"</span><span class="p">:</span> <span class="s">"Bearer svk_..."</span>',
+    '      <span class="p">}</span>',
+    '    <span class="p">}</span>',
+    '  <span class="p">}</span>',
+    '<span class="p">}</span>',
+  ];
+  window.LINE_COUNT = LINES.length;
+
+  const code = document.getElementById("code");
+  code.innerHTML = LINES.map(
+    (l, i) => `<span class="ln" id="ln${i}" hidden>${l}</span>`
+  ).join("") + '<span class="ln" id="caretline"><span class="caret"></span></span>';
+
+  const indent = (k) => (LINES[k].match(/^ */) || [""])[0].length * 10.2;
+
+  /** Reveal the first `k` lines and park the caret after them. */
+  window.showLines = (k) => {
+    LINES.forEach((_, i) => { document.getElementById("ln" + i).hidden = i >= k; });
+    const caret = document.getElementById("caretline");
+    caret.hidden = false;
+    caret.style.paddingLeft = 22 + (k < LINES.length ? indent(k) : 0) + "px";
+  };
+
+  window.showDone = () => {
+    window.showLines(LINES.length);
+    document.getElementById("caretline").hidden = true;
+    const s = document.getElementById("status");
+    s.textContent = "saved — restart your AI tool to load it";
+    s.classList.add("done");
+  };
+
+  window.showLines(0);
+</script>

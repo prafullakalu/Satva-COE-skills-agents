@@ -1,0 +1,246 @@
+<!-- Structure reference only (adapted from a real setup guide; hostnames replaced with example.com). The shots/ images it points at are not shipped. Copy it, then rewrite for your feature. -->
+<h2>What this is</h2>
+
+<p>The Satva Shopify MCP connects your Shopify store to the AI tools you already use — Cursor, Claude, or VS Code — so you can ask them about products, orders, customers, and inventory in plain language.</p>
+
+<p>It is for Satva staff and the merchants they support. There is nothing to install and no software to run on your machine: you sign in to a web page, connect your store, and paste two lines of configuration into your AI tool.</p>
+
+<p>Setup takes about five minutes and is done once per store.</p>
+
+<h2>Before you start</h2>
+
+<ul>
+  <li>A Satva Google account (<code>@satvasolutions.com</code>) to sign in with.</li>
+  <li>Permission to install apps on the Shopify store you want to connect — Shopify will ask you to approve access.</li>
+  <li>Your store's <b>myshopify.com</b> address. A custom domain such as <code>shop.example.com</code> will not work.</li>
+  <li>An AI tool that supports MCP: Cursor, Claude Desktop / Claude Code, or VS Code.</li>
+</ul>
+
+<div class="tip">
+  <p>Not sure of your myshopify.com address? In Shopify admin go to <b>Settings → Domains</b>. The address ending in <code>.myshopify.com</code> is the one this guide needs.</p>
+</div>
+
+<table>
+  <tr><th>What</th><th>Address</th><th>Used for</th></tr>
+  <tr><td>Control panel</td><td><code>https://mcp.example.com</code></td><td>Sign in, connect stores, copy your key</td></tr>
+  <tr><td>MCP server URL</td><td><code>https://mcp.example.com/mcp</code></td><td>Pasted into your AI tool's configuration</td></tr>
+  <tr><td>Your store address</td><td><code>your-store.myshopify.com</code></td><td>Typed into step 1 of the panel</td></tr>
+</table>
+
+<p>You never paste a Shopify client ID or secret anywhere. Satva runs one shared Shopify Partner app for everyone, so there is no bring-your-own-app step in this guide.</p>
+
+<h2>1. Sign in</h2>
+
+<p>Open <code>https://mcp.example.com</code> in your browser. You will land on the sign-in page.</p>
+
+<figure>
+  <img src="shots/s01-signin.png" alt="The Satva Shopify MCP sign-in page">
+  <figcaption>Ring 1 — <b>Sign in with Google</b>. Use your Satva Google account; the page says "Use your Satva Google account. Your Shopify connections are created automatically." Sign-in is restricted to the Satva domain, so a personal Google account will be refused.</figcaption>
+</figure>
+
+<p>After signing in you land on the control panel. It has exactly three steps and you work through them in order.</p>
+
+<figure>
+  <img src="shots/s02-dashboard.png" alt="The whole control panel showing all three steps">
+  <figcaption>The full panel. Ring 1 — <b>1 Connect store</b>. Ring 2 — <b>2 Choose store</b>. Ring 3 — <b>3 Use in your AI tools</b>. The banner at the top tells you where you are: before you connect anything it reads "Not connected yet — Start with step 1: type your store address and click Connect. Shopify will ask you to approve access."</figcaption>
+</figure>
+
+<div class="break"></div>
+
+<h2>2. Connect your store</h2>
+
+<p>Step 1 is headed <b>Connect store</b>, with the hint "Type your store address. You will be sent to Shopify to approve access — nothing to copy or paste."</p>
+
+<figure>
+  <img src="shots/s03-step1-connect.png" alt="Step 1 of the panel: the store address box and Connect button">
+  <figcaption>Ring 1 — the <b>Store address</b> box, which shows the placeholder <code>your-store.myshopify.com</code>. Ring 2 — the <b>Connect Shopify</b> button. Ring 3 — the <b>What access is requested?</b> link, which expands to list the permissions Shopify will ask you to approve.</figcaption>
+</figure>
+
+<ol>
+  <li>Type your store address. Both <code>your-store.myshopify.com</code> and just <code>your-store</code> are accepted.</li>
+  <li>Click <b>Connect Shopify</b>. Your browser is sent to Shopify.</li>
+  <li>On Shopify's own screen, review the permissions and approve the install. This happens in Shopify, not in the Satva panel.</li>
+  <li>You are returned to the panel. A green banner confirms "Store connected — Pick the active store in step 2 if you connected more than one."</li>
+</ol>
+
+<figure>
+  <img src="shots/s04-scopes.png" alt="The expanded list of requested Admin API scopes">
+  <figcaption>Ring 1 — the expanded scope list under <b>What access is requested?</b>. The panel explains: "Satva's Shopify app asks for these Admin API scopes. You approve them once, in Shopify."</figcaption>
+</figure>
+
+<div class="warn">
+  <p>Start the connection yourself, from step 1 in your own browser. Never finish a Shopify connect link that someone else sent you — the panel deliberately rejects an install that began in a different browser.</p>
+</div>
+
+<h2>3. Choose the active store</h2>
+
+<p>Step 2 is headed <b>Choose store</b>, with the hint "If you connected more than one store, choose which one the tools should use." You can connect as many stores as you like to one account, but exactly one is <b>Active</b> at a time, and the tools only reach the active one.</p>
+
+<figure>
+  <img src="shots/s05-step2-stores.png" alt="Step 2 of the panel listing the connected stores">
+  <figcaption>Ring 1 — the <b>Active</b> badge on the store the tools are currently using. Ring 2 — <b>Use this store</b>, shown next to every store that is not active; click it to switch. Ring 3 — <b>Remove</b>, which disconnects that one store.</figcaption>
+</figure>
+
+<ul>
+  <li>With one store connected, there is nothing to do here — it is active automatically.</li>
+  <li>With more than one, the top banner reads "Pick your active store — More than one store is connected. Choose which one the tools should use in step 2."</li>
+  <li>Before you connect anything, this step shows "No stores yet — finish step 1 first."</li>
+</ul>
+
+<div class="break"></div>
+
+<h2>4. Copy your key and configuration</h2>
+
+<p>Step 3 is headed <b>Use in your AI tools</b>, with the hint "Copy the config below into your MCP client." It gives you three things: the MCP server URL, your personal key, and a ready-made configuration block for each supported tool.</p>
+
+<figure>
+  <img src="shots/s06-step3-tools.png" alt="Step 3 of the panel showing the URL, key, and client tabs">
+  <figcaption>Ring 1 — the MCP URL <code>https://mcp.example.com/mcp</code> with its <b>Copy URL</b> button. Ring 2 — your personal key with its <b>Copy key</b> button; keys always start with <code>svk_</code>. Ring 3 — the <b>Cursor</b>, <b>Claude</b>, and <b>VS Code</b> tabs, each holding a configuration block already filled in with your URL and key.</figcaption>
+</figure>
+
+<div class="warn">
+  <p>The panel says it plainly: "Your personal key — treat it like a password. Anyone holding it reaches your Shopify store." Do not email it, paste it into a chat, or commit it to a repository.</p>
+</div>
+
+<p>If your key is ever exposed, click <b>Regenerate key</b>. The panel asks you to confirm, because — in its own words — "The old one stops working immediately and every client using it must be updated." After regenerating, copy the new configuration into every AI tool you had set up.</p>
+
+<figure>
+  <img src="shots/s07-config.png" alt="The ready-made configuration block and its copy button">
+  <figcaption>Ring 1 — the ready-made configuration, already containing your URL and key. Ring 2 — the copy button for the selected tab (<b>Copy for Cursor</b>, <b>Copy for Claude</b>, or <b>Copy for VS Code</b>). Use the button rather than selecting the text by hand.</figcaption>
+</figure>
+
+<p>The Cursor block looks like this, with <code>svk_your-personal-key</code> replaced by your own key:</p>
+
+<pre>{
+  "mcpServers": {
+    "Satva Shopify": {
+      "url": "https://mcp.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer svk_your-personal-key"
+      }
+    }
+  }
+}</pre>
+
+<p>The Claude block is the same shape. The VS Code block uses <code>servers</code> instead of <code>mcpServers</code> and adds <code>"type": "http"</code>.</p>
+
+<div class="tip">
+  <p><b>Obot users:</b> where the deployment is set up with an Obot connect URL, step 3 shows that URL instead and no API key is needed — you stay signed in through Obot. The key and <b>Regenerate key</b> button are not shown at all.</p>
+</div>
+
+<div class="break"></div>
+
+<h2>5. Add it to your AI tool</h2>
+
+<p>Copy the block from the tab that matches your tool, then paste it where that tool keeps its MCP settings.</p>
+
+<table>
+  <tr><th>Tool</th><th>Tab to use</th><th>Where to paste</th></tr>
+  <tr><td>Cursor</td><td>Cursor</td><td>Cursor's <code>mcp.json</code></td></tr>
+  <tr><td>Claude Desktop / Claude Code</td><td>Claude</td><td>The Claude MCP configuration file</td></tr>
+  <tr><td>VS Code</td><td>VS Code</td><td>VS Code MCP settings (uses <code>servers</code>)</td></tr>
+</table>
+
+<p>If the file already has other MCP servers in it, add the <code>"Satva Shopify"</code> entry alongside them rather than replacing the whole file.</p>
+
+<p>Save the file and restart your AI tool. Then check it works by asking:</p>
+
+<pre>list my 10 most recent orders</pre>
+
+<p>If the tool answers with orders from your store, setup is complete. If it says it has no Shopify tools available, the configuration was not picked up — check the file, save it, and restart the tool again.</p>
+
+<h2>Permissions explained</h2>
+
+<p>Satva's Shopify app asks for a fixed set of Admin API scopes, and you approve them once, in Shopify, during step 1. They cover:</p>
+
+<ul>
+  <li>Products, inventory, and locations</li>
+  <li>Orders, draft orders, fulfillments, and returns</li>
+  <li>Customers, companies, and checkouts</li>
+  <li>Discounts and gift cards</li>
+  <li>Markets, shipping, and analytics</li>
+  <li>Content, themes, files, and metaobjects</li>
+</ul>
+
+<p>Each is requested as read or write as configured for the app. The exact list is always visible in the panel under <b>What access is requested?</b> in step 1 — that expanded list, not this guide, is the authority.</p>
+
+<h2>Managing stores</h2>
+
+<table>
+  <tr><th>You want to</th><th>Do this</th><th>Effect</th></tr>
+  <tr><td>Switch which store the tools use</td><td>Step 2 → <b>Use this store</b></td><td>That store gets the <b>Active</b> badge; the previous one stays connected</td></tr>
+  <tr><td>Add another store</td><td>Step 1 → type the address → <b>Connect another store</b></td><td>Approve in Shopify again; then pick the active store in step 2</td></tr>
+  <tr><td>Remove one store</td><td>Step 2 → <b>Remove</b></td><td>Confirmation warns "Tools will stop reaching this store"</td></tr>
+  <tr><td>Remove every store</td><td>Step 1 → <b>Disconnect all</b></td><td>Confirmation asks "Disconnect every store from this account?"</td></tr>
+</table>
+
+<p>Removing a store does not change your personal key, and regenerating your key does not disconnect any store. They are independent.</p>
+
+<div class="break"></div>
+
+<h2>If something goes wrong</h2>
+
+<p>The panel shows a banner at the top when a connection attempt fails. Find the banner title below.</p>
+
+<table>
+  <tr><th>Banner title</th><th>What to do</th></tr>
+  <tr>
+    <td>That does not look like a Shopify store address</td>
+    <td>Enter the store as <code>your-store.myshopify.com</code> (or just <code>your-store</code>). Custom domains such as <code>shop.example.com</code> do not work — take the myshopify.com address from Shopify admin → Settings → Domains.</td>
+  </tr>
+  <tr>
+    <td>Install cancelled</td>
+    <td>You declined the permission request in Shopify. Click Connect again when you are ready.</td>
+  </tr>
+  <tr>
+    <td>Shopify callback failed verification</td>
+    <td>The install response could not be verified. Start the connection again from step 1.</td>
+  </tr>
+  <tr>
+    <td>Redirect URI mismatch</td>
+    <td>A server-side configuration problem. The banner shows the exact redirect URL that must be registered on the Shopify Partner app — send that line to your Satva admin.</td>
+  </tr>
+  <tr>
+    <td>Connection link expired</td>
+    <td>The install took too long to complete. Start again from step 1.</td>
+  </tr>
+  <tr>
+    <td>That install link was not started in this browser</td>
+    <td>A store can only be connected by the same browser that began the install. Never finish a Shopify connect link someone else sent you — start it yourself from step 1.</td>
+  </tr>
+  <tr>
+    <td>Could not start the Shopify install</td>
+    <td>Something went wrong talking to Shopify. Check the store address and try again.</td>
+  </tr>
+  <tr>
+    <td>Shopify app is not configured on this server / Shopify app not configured</td>
+    <td>Nothing you can fix from your side. Ask your Satva admin to set the deployment's Shopify credentials, then reload the page.</td>
+  </tr>
+</table>
+
+<p>Other things worth checking:</p>
+
+<ul>
+  <li><b>The AI tool shows no Shopify tools.</b> The configuration file was not saved, or the tool was not restarted.</li>
+  <li><b>The tool reports an authorisation failure.</b> The key in your configuration no longer matches the panel — most often because <b>Regenerate key</b> was used. Copy the current configuration again.</li>
+  <li><b>Answers come from the wrong store.</b> The wrong store is active. Fix it in step 2 with <b>Use this store</b>.</li>
+</ul>
+
+<h2>Quick reference</h2>
+
+<table>
+  <tr><th>Item</th><th>Value</th></tr>
+  <tr><td>Control panel</td><td><code>https://mcp.example.com</code></td></tr>
+  <tr><td>MCP server URL</td><td><code>https://mcp.example.com/mcp</code></td></tr>
+  <tr><td>Auth header</td><td><code>Authorization: Bearer svk_&lt;your personal key&gt;</code></td></tr>
+  <tr><td>Sign-in</td><td>Satva Google account (<code>@satvasolutions.com</code>)</td></tr>
+  <tr><td>Store address format</td><td><code>your-store.myshopify.com</code> — custom domains do not work</td></tr>
+</table>
+
+<h2>Watch the setup (animated)</h2>
+
+<p>A short animated walkthrough covers the same five steps end to end: signing in, typing the store address, approving in Shopify, choosing the active store, and copying the configuration. It runs about thirty seconds and is useful if you would rather watch the flow once before doing it yourself.</p>
+
+<figure class="strip"><img src="demo-filmstrip.png" alt="Six stills from the animated walkthrough"><figcaption>Six moments from <code>Satva-Shopify-MCP-Demo.gif</code> — the full 30-second animation is distributed with this guide.</figcaption></figure>
+
+<p>The animated file <code>Satva-Shopify-MCP-Demo.gif</code> ships alongside this PDF. If you do not have it, ask your Satva contact for the shared link.</p>

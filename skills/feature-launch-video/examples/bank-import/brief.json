@@ -1,0 +1,44 @@
+{
+  "product": "Satva Ledger",
+  "feature": "Bank statement import",
+  "message": "It reads your statement so you don't have to type it in.",
+  "audience": "practice owners already on QuickBooks",
+  "aspect": "16:9",
+  "durationTarget": 36,
+  "theme": "ledger-clean",
+  "brand": {
+    "accent": "#1d83b8",
+    "ink": "#111111",
+    "paper": "#f7fafd",
+    "font": "Mulish",
+    "logo": ""
+  },
+  "flow": [
+    {
+      "step": "Upload the statement",
+      "visual": "card",
+      "icon": "tray",
+      "data": { "kicker": "Vault", "fields": [["File", "statement-sept.csv"], ["Rows found", "142"]] },
+      "line": "Drop in the file. It reads every row."
+    },
+    {
+      "step": "It matches what it can",
+      "visual": "stat",
+      "icon": "check",
+      "data": { "big": "138 / 142", "label": "matched automatically" },
+      "line": "One hundred thirty eight matched on the first pass."
+    },
+    {
+      "step": "It asks about the rest",
+      "visual": "approval",
+      "icon": "shield",
+      "data": { "prompt": "4 rows need a category. Review them?", "allow": "Review" },
+      "line": "Four it isn't sure about. You decide, not it."
+    }
+  ],
+  "endCard": { "tagline": "Fewer rows to type. Same books.", "cta": "See it on your data." },
+  "groundedFactsSource": "example/demo — illustrative numbers, not from a real import run",
+  "claims": { "never": ["autonomous", "100% accurate", "zero errors", "replaces your bookkeeper"] },
+  "voice": { "provider": "elevenlabs", "voiceId": "nPczCjzI2devNBz1zQrb" },
+  "music": { "bpm": 112, "key": "auto" }
+}

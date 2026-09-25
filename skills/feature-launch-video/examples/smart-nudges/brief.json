@@ -1,0 +1,44 @@
+{
+  "product": "Flowdesk",
+  "feature": "Smart invoice nudges",
+  "message": "It reminds clients before you have to.",
+  "audience": "freelancers and small agencies chasing late invoices",
+  "aspect": "9:16",
+  "durationTarget": 30,
+  "theme": "cinematic-dark",
+  "brand": {
+    "accent": "#6c5ce7",
+    "ink": "#f2f4f7",
+    "paper": "#0b0e14",
+    "font": "Inter",
+    "logo": ""
+  },
+  "flow": [
+    {
+      "step": "It watches due dates",
+      "visual": "list",
+      "icon": "clock",
+      "data": { "kicker": "Overdue", "fields": [["Acme Co.", "12 days late"], ["Bright Studio", "3 days late"]] },
+      "line": "It tracks every invoice's due date, quietly."
+    },
+    {
+      "step": "It drafts the nudge",
+      "visual": "card",
+      "icon": "bell",
+      "data": { "kicker": "Draft ready", "fields": [["To", "Acme Co."], ["Tone", "Friendly reminder"]] },
+      "line": "A short, polite reminder — written for you to check."
+    },
+    {
+      "step": "It asks before sending",
+      "visual": "approval",
+      "icon": "shield",
+      "data": { "prompt": "Send this reminder to Acme Co.?", "allow": "Send" },
+      "line": "Nothing goes out without your yes."
+    }
+  ],
+  "endCard": { "tagline": "Fewer awkward follow-ups.", "cta": "Try it on your next invoice." },
+  "groundedFactsSource": "example/demo — illustrative product, not a real Flowdesk feature",
+  "claims": { "never": ["autonomous", "100% accurate", "guaranteed", "spam"] },
+  "voice": { "provider": "elevenlabs", "voiceId": "nPczCjzI2devNBz1zQrb" },
+  "music": { "bpm": 100, "key": "auto" }
+}
