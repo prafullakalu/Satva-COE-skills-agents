@@ -113,3 +113,71 @@ class TestConclusions(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestSkuKeyAndNearMatch(unittest.TestCase):
+    """SYNTHETIC fixtures reproducing export-based-run lessons at small scale."""
+
+    def test_name_as_sku_key_detected_and_used(self):
+        from mapping_engine import detect_sku_key
+        srcs = [prod_src("AB-1", "Alpha")]
+        tgts = [item_tgt("9", "9", "AB-1", None)]   # 'SKU' col is item id, Name holds the SKU
+        info = detect_sku_key(srcs, tgts)
+        self.assertEqual(info["sku_key_source"], "name")
+        self.assertEqual(info["data_quality"][0]["gap"], "qbo_sku_column_is_item_id")
+        r = match_product_identity(srcs[0], tgts, sku_key=info["sku_key_source"])
+        self.assertEqual((r.status, r.confidence), ("MAPPED", "HIGH"))
+        self.assertIn("sku_key_source=name", r.evidence)
+
+    def test_sku_key_prefers_sku_field_when_overlapping_else_none(self):
+        from mapping_engine import detect_sku_key
+        self.assertEqual(detect_sku_key([prod_src("X", "x")], [item_tgt("1", "X", "n")])["sku_key_source"], "sku")
+        info = detect_sku_key([prod_src("X", "x")], [item_tgt("1", None, "zzz")])
+        self.assertEqual((info["sku_key_source"], info["data_quality"]), ("none", []))
+
+    def test_near_sku_leading_zeros_and_punctuation(self):
+        for lw, qbo in [("0051", "51"), ("ab 1", "AB-1"), ("A.b1", "ab1")]:
+            r = match_product_identity(prod_src(lw, "n"), [item_tgt("1", qbo, "q")])
+            self.assertEqual((r.status, r.confidence, r.review_required), ("MAPPED", "MEDIUM", True), lw)
+            self.assertIn("near SKU match (normalized)", r.evidence)
+
+    def test_exact_name_sku_differs_tagged_unverified_and_counted(self):
+        r = match_product_identity(prod_src("S1", "Two Cent Coin"), [item_tgt("1", "S9", "Two Cent Coin")])
+        self.assertEqual(r.status, "UNVERIFIED")
+        self.assertIn("exact_name_sku_differs", r.evidence)
+        plain = match_product_identity(prod_src("S2", "Two Cent Coin"), [item_tgt("1", "S9", "Two Cent Coin Proof")])
+        cov = coverage_report([r, plain])
+        self.assertEqual(cov["exact_name_sku_differs_count"], 1)
+        self.assertEqual(cov["unverified_count"], 2)
+
+
+class TestProductIndexParity(unittest.TestCase):
+    def test_prebuilt_index_matches_unindexed_results(self):
+        from mapping_engine import build_product_index
+        from dataclasses import asdict
+        tgts = [
+            item_tgt("1", "EX1", "Alpha Widget", 10),
+            item_tgt("2", "ab-2", "Beta Gadget", 10),
+            item_tgt("3", "Z9", "Gamma Gizmo", 5),
+            item_tgt("4", "Q4", "Delta Sprocket", 5),
+            item_tgt("5", "Q5", "Delta Sprocket Kit", 7),
+            item_tgt("6", "T6", "Tie One", 1),
+            item_tgt("7", "T7", "Tie Two", 2),
+            item_tgt("8", "D1", "Dup A"), item_tgt("9", "D1", "Dup B"),
+            item_tgt("10", "OLD", "Retired Thing", 3, active=False),
+        ]
+        srcs = [
+            prod_src("EX1", "whatever"),                    # exact
+            prod_src("AB 2", "nothing"),                    # near
+            prod_src("N1", "Gamma Gizmo Deluxe", 5),        # name + price
+            prod_src("N2", "Gamma Gizmo Deluxe", 99),       # name only
+            prod_src("S1", "Gamma Gizmo"),                  # exact_name_sku_differs
+            prod_src("T0", "Tie", 1), prod_src("T00", "Tie", 50),  # tie broken / not broken
+            prod_src("D1", "x"),                            # duplicate exact
+            prod_src("OLD", "x"), prod_src("NO1", "Unrelated Zzz"), prod_src("", "Delta Sprocket Kit", 7),
+        ]
+        for key in ("sku", "name", "none"):
+            idx = build_product_index(tgts, key)
+            for s in srcs:
+                self.assertEqual(asdict(match_product_identity(s, tgts, sku_key=key, index=idx)),
+                                 asdict(match_product_identity(s, tgts, sku_key=key)), (key, s.sku))

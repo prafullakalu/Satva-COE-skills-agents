@@ -36,7 +36,7 @@
 
 ## What's inside
 
-Four [Claude Code skills](https://docs.claude.com/en/docs/claude-code/skills). Install them once and Claude picks the right one from what you ask.
+Five [Claude Code skills](https://docs.claude.com/en/docs/claude-code/skills). Install them once and Claude picks the right one from what you ask.
 
 | Skill | Produces | For whom | Say something like |
 |---|---|---|---|
@@ -44,6 +44,7 @@ Four [Claude Code skills](https://docs.claude.com/en/docs/claude-code/skills). I
 | 📝 **[`satva-doc`](skills/satva-doc/SKILL.md)** | Brief plain-black Word **`.doc`** | Your own team — handovers, "how we built it" | *"Write a satva doc explaining how the sync works."* |
 | 🎬 **[`feature-launch-video`](skills/feature-launch-video/SKILL.md)** | Marketing / launch **video** (MP4) with original voice, music and SFX | Prospects and customers | *"Make a 30-second launch video for our bank-import feature."* |
 | 🎞️ **[`satva-ledger-marketing-video`](skills/satva-ledger-marketing-video/SKILL.md)** | The full **82-second sizzle** for the Satva Ledger accounting agent — a reference pipeline to fork | Marketing team | *"Rebuild the Satva Ledger sizzle video."* · *"Make a hero video like it for our next product."* |
+| 📊 **[`lw-qbo-mapping`](skills/lw-qbo-mapping/README.md)** | Per-client Excel workbook: Linnworks ↔ QuickBooks product mapping, gaps and decisions the accountant approves in Excel | Accountants reconciling ecommerce inventory to QuickBooks | *"Update the Coins of America mapping workbook."* |
 
 Anybody or any organisation can use them (MIT). To use your own logo and colours, see [Make it your own brand](#make-it-your-own-brand).
 

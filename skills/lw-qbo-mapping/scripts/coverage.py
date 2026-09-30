@@ -20,6 +20,8 @@ def coverage_report(results: list[MappingResult]) -> dict:
     inactive = [r for r in relevant if r.status == "INACTIVE"]
     unverified = [r for r in relevant if r.status == "UNVERIFIED"]
     orphaned = [r for r in results if r.status == "ORPHANED"]
+    name_differs = [r for r in relevant if "exact_name_sku_differs" in r.evidence]
+    near = [r for r in relevant if "near SKU match (normalized)" in r.evidence]
 
     def abs_value(rows):
         return sum(abs(r.source_value) for r in rows if r.source_value is not None)
@@ -41,6 +43,8 @@ def coverage_report(results: list[MappingResult]) -> dict:
         "inactive_count": len(inactive),
         "unverified_count": len(unverified),
         "orphaned_count": len(orphaned),
+        "exact_name_sku_differs_count": len(name_differs),
+        "near_sku_count": len(near),
         "count_coverage_pct": round(count_coverage * 100, 1) if count_coverage is not None else None,
         "total_value": round(total_value, 2),
         "mapped_value": round(mapped_value, 2),

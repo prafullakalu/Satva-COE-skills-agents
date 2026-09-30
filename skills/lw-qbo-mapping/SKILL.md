@@ -5,10 +5,32 @@ description: >
   period, map Linnworks dimensions (channel, SKU, refunds, shipping, tax, payment method) to QBO
   accounting objects (accounts, items), identify mapping/data gaps, compute count+value coverage,
   and reconcile Linnworks totals against QBO totals. READ-ONLY. Trigger on "analyze my Linnworks
-  and QuickBooks data", "mapping health report", "gap analysis Linnworks QBO", or /lw-qbo-mapping.
+  and QuickBooks data", "mapping health report", "gap analysis Linnworks QBO", "update my mapping
+  workbook", "what needs my decision", or /lw-qbo-mapping.
 ---
 
 # Linnworks -> QuickBooks Data Mapping & Gap Analysis
+
+## Quick run (default for accountants — start here)
+
+The user may be a non-technical accountant. Talk plain accounting English (see `reference/glossary.md`;
+never say UNVERIFIED/AMBIGUOUS/SKU — say "couldn't confirm", "product code"). Never ask for
+credentials: both systems come through the connected MCP servers (or the user's export files).
+
+1. **Both systems, always.** Fetch from BOTH Linnworks and QuickBooks (tool map in Step 3). If either
+   is unavailable, say which one and stop — never report from one side.
+2. **Save the data** as JSON (raw MCP output) or use the user's `.xlsx`/`.csv` exports.
+3. **One command** (needs `openpyxl`; `pip install openpyxl` if missing):
+   `python scripts/run_analysis.py --client "<Client Name>" --lw <lw file> --qbo <qbo file> [--mcp] [--period "<label>"]`
+   `--mcp` = the JSON files are raw MCP tool output; omit for export rows.
+4. **It writes to `~/LW-QBO-Mapping/<client>/`** (never the repo): `workbook.xlsx` (his control panel and
+   the skill's memory) and `summary.csv`. Re-running updates the same workbook: his Approve/Reject/Change
+   picks are kept and learned, nothing he typed is overwritten, a backup is taken first.
+5. **Tell him** the printed headline, where the workbook is, and to open **Start Here** then **Needs Your
+   Decision**. If the run says Excel has the file open, relay the `_pending` instruction verbatim.
+
+New client = new `--client` name; nothing carries over between clients. Everything below is the detailed
+method the script implements plus the account/channel mapping and reconciliation it does not yet automate.
 
 ## Hard rules (read first)
 
