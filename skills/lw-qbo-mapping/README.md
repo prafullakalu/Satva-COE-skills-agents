@@ -89,3 +89,24 @@ coverage.py, reconcile.py, conclusions.py, report.py / export_xlsx.py).
   the live server, not assumed).
 - **Currency mismatches block reconciliation** rather than producing a wrong number — see
   `reconcile.py`'s `CURRENCY_MISMATCH` status.
+
+
+## Accountant workflow (per client, on the user's own machine)
+
+`scripts/run_analysis.py` turns Linnworks + QuickBooks data into `~/LW-QBO-Mapping/<client>/workbook.xlsx`
+(+ `summary.csv`). The workbook is both the accountant's control panel and the skill's memory:
+
+| Sheet | Purpose |
+|---|---|
+| Start Here | Plain-English status and health score |
+| Needs Your Decision | Approve / Reject / Change dropdown; picks are learned next run |
+| Approved Mappings | Everything confirmed (this replaces any JSON rules file) |
+| Matched Products, Only in QuickBooks, Only in Linnworks | The two-sided diff |
+| What's Wrong | Plain-language findings and data gaps |
+| History, Change Log, Glossary | Trend, audit trail, terms |
+
+Design rules: both systems are required (no one-sided reports); client data never enters the repo; no
+credentials are read or stored (they live in the MCP connections); read-only on both systems; a backup
+precedes every write; a workbook open in Excel produces a `_pending` copy instead of an error.
+
+Install: `./install.sh` or `install.ps1` from the repo root copies the skill; it needs `python` and `openpyxl`.

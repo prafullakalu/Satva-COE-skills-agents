@@ -101,3 +101,32 @@ class TestMappingEngine(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestDiagnostics(unittest.TestCase):
+    """SYNTHETIC fixtures."""
+
+    def test_multi_location_warning(self):
+        from mapping_engine import inventory_totals_check
+        s = [SourceRecord("linnworks", "sku", "a", "a", sku="a", qty=300)]
+        t = [TargetRecord("qbo", "item", "1", "a", qty=100)]
+        c = inventory_totals_check(s, t)
+        self.assertEqual((c["lw_total_qty"], c["qbo_total_qty"], c["ratio"]), (300, 100, 3.0))
+        self.assertTrue(c["possible_multi_location_sum"])
+        t[0].qty = 250
+        self.assertFalse(inventory_totals_check(s, t)["possible_multi_location_sum"])
+
+    def test_data_gap_findings(self):
+        from mapping_engine import data_gap_findings
+        srcs = [SourceRecord("linnworks", "sku", "a", "a", sku="a", qty=300),
+                SourceRecord("linnworks", "channel", "TIKTOK||USD", "TIKTOK", channel="TIKTOK")]
+        tgts = [TargetRecord("qbo", "item", "1", "a", qty=100)]
+        res = [propose_mapping(srcs[1], tgts)]
+        gaps = {g["gap"]: g for g in data_gap_findings(srcs, tgts, res)}
+        for k in ("no_price_data", "no_chart_of_accounts", "marketplace_fees_not_in_linnworks",
+                  "channel_no_clearing_account", "possible_multi_location_qty"):
+            self.assertIn(k, gaps)
+            self.assertEqual(set(gaps[k]), {"gap", "severity", "detail"})
+        self.assertIn("TIKTOK", gaps["channel_no_clearing_account"]["detail"])
+        tgts.append(TargetRecord("qbo", "account", "9", "Sales", account_type="Income"))
+        self.assertNotIn("no_chart_of_accounts", {g["gap"] for g in data_gap_findings(srcs, tgts)})

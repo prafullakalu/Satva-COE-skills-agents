@@ -239,42 +239,103 @@ def _price_close(a: Optional[float], b: Optional[float], tolerance_pct: float = 
     return abs(a - b) / base * 100 <= tolerance_pct
 
 
+def _norm_sku(s: Optional[str]) -> str:
+    """case/spacing/punctuation/leading-zero normalization for the 'near SKU' tier."""
+    n = re.sub(r"[^a-z0-9]", "", (s or "").lower())
+    return (n.lstrip("0") or "0") if n else ""
+
+
+def _nm(s: Optional[str]) -> str:
+    return " ".join((s or "").lower().split())
+
+
+def _key(t: TargetRecord, sku_key: str) -> Optional[str]:
+    return t.name if sku_key == "name" else (t.sku if sku_key == "sku" else None)
+
+
+@dataclass
+class ProductIndex:
+    """Prebuilt lookups over item-type targets so match_product_identity is ~O(1) per source."""
+    sku_key: str
+    items: list
+    exact: dict      # lowercased/stripped key -> [targets] (original order)
+    near: dict       # _norm_sku(key) -> [targets]
+    inverted: dict   # name token -> [item positions] (ascending)
+
+
+def build_product_index(targets: list[TargetRecord], sku_key: str = "sku") -> ProductIndex:
+    items = [t for t in targets if t.entity_type == "item"]
+    exact: dict = {}
+    near: dict = {}
+    inverted: dict = {}
+    for pos, t in enumerate(items):
+        k = _key(t, sku_key)
+        if k and sku_key in ("sku", "name"):
+            exact.setdefault(k.strip().lower(), []).append(t)
+            n = _norm_sku(k)
+            if n:
+                near.setdefault(n, []).append(t)
+        for tok in _tokens(t.name):
+            inverted.setdefault(tok, []).append(pos)
+    return ProductIndex(sku_key, items, exact, near, inverted)
+
+
 def match_product_identity(
     source: SourceRecord,
     targets: list[TargetRecord],
     price_tolerance_pct: float = PRICE_TOLERANCE_PCT,
+    sku_key: str = "sku",
+    index: Optional[ProductIndex] = None,
 ) -> MappingResult:
-    """SKU -> name -> price/qty, in that order. targets should be entity_type == 'item'.
+    """SKU (exact, then normalized) -> name -> price/qty, in that order. targets should be item-type.
 
+    sku_key picks the QBO-side identifier compared with the Linnworks SKU: "sku" (QBO Sku field),
+    "name" (QBO item Name holds the SKU) or "none" (skip SKU tiers). Use detect_sku_key() to choose.
     Returns status in {MAPPED, UNVERIFIED, AMBIGUOUS, INACTIVE, UNMAPPED}. UNVERIFIED is distinct
     from both AMBIGUOUS (multiple tied candidates) and UNMAPPED (no candidate at all): it means
     exactly one plausible candidate exists but the evidence isn't strong enough to confirm it
-    without human review (see reference/gap-taxonomy.md).
+    without human review (see reference/gap-taxonomy.md). An exact-name hit with a different SKU
+    stays UNVERIFIED but is tagged evidence 'exact_name_sku_differs'.
     """
-    items = [t for t in targets if t.entity_type == "item"]
+    if index is None or index.sku_key != sku_key:
+        index = build_product_index(targets, sku_key)
+    items = index.items
+    tag = f"sku_key_source={sku_key}"
 
-    # Priority 1: SKU exact match (case-insensitive)
-    if source.sku:
-        sku_matches = [t for t in items if t.sku and t.sku.strip().lower() == source.sku.strip().lower()]
+    if source.sku and sku_key in ("sku", "name"):
+        sku_matches = index.exact.get(source.sku.strip().lower(), [])
         if len(sku_matches) == 1:
             t = sku_matches[0]
             status = "MAPPED" if t.active else "INACTIVE"
-            return _product_result(source, t, status, "HIGH", ["SKU exact match"],
+            return _product_result(source, t, status, "HIGH", ["SKU exact match", tag],
                                     f"SKU '{source.sku}' matches QBO item '{t.name}' exactly",
                                     status != "MAPPED")
         if len(sku_matches) > 1:
             names = ", ".join(t.name for t in sku_matches)
             return _product_result(source, None, "AMBIGUOUS", "LOW",
-                                    [f"{len(sku_matches)} QBO items share SKU '{source.sku}'"],
+                                    [f"{len(sku_matches)} QBO items share SKU '{source.sku}'", tag],
                                     f"Duplicate SKU in QBO item list: {names}", True, target_name=names)
+        want = _norm_sku(source.sku)
+        near = index.near.get(want, []) if want else []
+        if len(near) == 1:
+            t = near[0]
+            return _product_result(source, t, "MAPPED" if t.active else "INACTIVE", "MEDIUM",
+                                    ["near SKU match (normalized)", tag],
+                                    f"SKU '{source.sku}' matches '{_key(t, sku_key)}' after normalization", True)
+        if len(near) > 1:
+            names = ", ".join(t.name for t in near)
+            return _product_result(source, None, "AMBIGUOUS", "LOW",
+                                    [f"{len(near)} QBO items near-match SKU '{source.sku}'", tag],
+                                    f"Multiple normalized SKU matches: {names}", True, target_name=names)
 
     # Priority 2: name similarity (token overlap), constrained to item-type targets
     src_tokens = _tokens(source.name)
-    candidates = []
-    for t in items:
-        overlap = src_tokens & _tokens(t.name)
-        if overlap:
-            candidates.append((t, len(overlap)))
+    counts: dict = {}
+    for tok in src_tokens:
+        for pos in index.inverted.get(tok, ()):
+            counts[pos] = counts.get(pos, 0) + 1
+    # ascending position + stable sort == original target order for ties
+    candidates = [(items[pos], counts[pos]) for pos in sorted(counts)]
     candidates.sort(key=lambda x: -x[1])
 
     if not candidates:
@@ -293,16 +354,18 @@ def match_product_identity(
     # Price/qty NEVER promotes a match on its own -- it only corroborates or disambiguates a
     # name-overlap candidate that already exists.
     corroborated = [c for c in top if _price_close(source.amount, c[0].unit_price, price_tolerance_pct)]
+    exact_nm = ["exact_name_sku_differs"] if (
+        source.sku and len(top) == 1 and _nm(source.name) and _nm(source.name) == _nm(top[0][0].name)) else []
 
     if len(top) == 1:
         t = top[0][0]
         if corroborated:
             status = "MAPPED" if t.active else "INACTIVE"
             return _product_result(source, t, status, "MEDIUM",
-                                    [f"name overlap ({best_score} token(s))", "price corroborated within tolerance"],
+                                    [f"name overlap ({best_score} token(s))", "price corroborated within tolerance"] + exact_nm,
                                     f"Name match '{t.name}' corroborated by price", status != "MAPPED")
         return _product_result(source, t, "UNVERIFIED", "LOW",
-                                [f"name overlap ({best_score} token(s)) only, price not corroborated"],
+                                [f"name overlap ({best_score} token(s)) only, price not corroborated"] + exact_nm,
                                 f"Name overlap with '{t.name}' but price/qty could not confirm it", True)
 
     if len(corroborated) == 1:
@@ -343,4 +406,77 @@ def find_orphaned_products(targets: list[TargetRecord], results: list[MappingRes
                 t, "ORPHANED", "HIGH", ["no MappingResult ever selected this QBO item"],
                 "QBO item with no corresponding Linnworks SKU", True,
             ))
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Data-source diagnostics (lessons from export-based runs: SKU column may be the Item ID, qty may be
+# summed across mirrored locations, some gaps are structural)
+# ---------------------------------------------------------------------------
+
+MULTI_LOCATION_RATIO = 1.5  # LW/QBO total qty above this is implausible for one stock pool
+
+
+def detect_sku_key(sources: list[SourceRecord], targets: list[TargetRecord]) -> dict:
+    """Pick the QBO-side SKU key: "sku" if QBO Sku is populated and overlaps LW SKUs, else "name" if
+    QBO item names overlap LW SKUs, else "none". Also returns data-quality findings, e.g. the QBO
+    'SKU' column actually holding Item IDs. -> {"sku_key_source": str, "data_quality": [finding]}"""
+    lw = {_norm_sku(s.sku) for s in sources if s.sku} - {""}
+    items = [t for t in targets if t.entity_type == "item"]
+    skus = [t for t in items if t.sku]
+    if any(_norm_sku(t.sku) in lw for t in skus):
+        key = "sku"
+    elif any(_norm_sku(t.name) in lw for t in items):
+        key = "name"
+    else:
+        key = "none"
+    dq = []
+    if skus and key != "sku" and (
+            all(t.sku.strip() == str(t.target_id).strip() for t in skus) or all(t.sku.strip().isdigit() for t in skus)):
+        dq.append({"gap": "qbo_sku_column_is_item_id", "severity": "HIGH",
+                   "detail": "QBO 'SKU' values are Item IDs (equal to item ids / all numeric, no overlap with "
+                             "Linnworks SKUs), not SKUs; items must be matched by "
+                             + ("Name." if key == "name" else "another key.")})
+    return {"sku_key_source": key, "data_quality": dq}
+
+
+def inventory_totals_check(sources: list[SourceRecord], targets: list[TargetRecord]) -> dict:
+    """Total qty per side + ratio. Flags possible_multi_location_sum when LW/QBO > 1.5x. Never sums
+    locations itself: it only totals the qty values it is given."""
+    lw = sum(s.qty for s in sources if s.qty is not None)
+    qbo = sum(t.qty for t in targets if t.entity_type == "item" and t.qty is not None)
+    ratio = round(lw / qbo, 2) if qbo else None
+    flag = bool(ratio and ratio > MULTI_LOCATION_RATIO)
+    return {"lw_total_qty": lw, "qbo_total_qty": qbo, "ratio": ratio, "possible_multi_location_sum": flag,
+            "warning": (f"Linnworks qty is {ratio}x QBO: confirm it isn't summed across mirrored "
+                        f"FBA/fulfilment locations.") if flag else ""}
+
+
+def data_gap_findings(sources: list[SourceRecord], targets: list[TargetRecord],
+                      account_results: Optional[list[MappingResult]] = None) -> list[dict]:
+    """Deterministic data gaps -> [{"gap","severity","detail"}] (shape conclusions.derive_conclusions reads).
+    account_results: channel/dimension->account MappingResults (from propose_mapping)."""
+    out = []
+    prods = [s for s in sources if s.entity_type == "sku"]
+    items = [t for t in targets if t.entity_type == "item"]
+    if prods and not any(s.amount for s in prods) and not any(t.unit_price for t in items):
+        out.append({"gap": "no_price_data", "severity": "MEDIUM",
+                    "detail": "No prices on either side: price can't corroborate name matches."})
+    if not any(t.entity_type == "account" for t in targets):
+        out.append({"gap": "no_chart_of_accounts", "severity": "HIGH",
+                    "detail": "QBO chart of accounts not loaded: category -> account mapping can't be "
+                              "proposed (an unmapped category can fail Sales Order sync)."})
+    if not any(s.entity_type in ("marketplace_fee", "payment_processing_fee") for s in sources):
+        out.append({"gap": "marketplace_fees_not_in_linnworks", "severity": "HIGH",
+                    "detail": "Marketplace/payment fees aren't in Linnworks: they come from payout "
+                              "statements (Amazon/eBay/Stripe)."})
+    chans = sorted({r.source_name for r in (account_results or [])
+                    if r.source_type == "channel" and r.status == "UNMAPPED"})
+    if chans:
+        out.append({"gap": "channel_no_clearing_account", "severity": "MEDIUM",
+                    "detail": f"{' and '.join(chans) if len(chans) < 3 else ', '.join(chans)} "
+                              f"have no clearing/income account in QBO."})
+    chk = inventory_totals_check(prods, items)
+    if chk["possible_multi_location_sum"]:
+        out.append({"gap": "possible_multi_location_qty", "severity": "MEDIUM", "detail": chk["warning"]})
     return out

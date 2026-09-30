@@ -8,6 +8,7 @@ The agent (SKILL.md) is responsible for fetching raw JSON via the MCP tools and 
 See reference/normalization-schema.md for the target shapes.
 """
 from __future__ import annotations
+import re
 from dataclasses import dataclass, field, asdict
 from typing import Any, Optional
 
@@ -173,4 +174,70 @@ def flatten_account_list_report(report_json: dict) -> list[dict]:
         cols = row.get("ColData", [])
         if len(cols) >= 2:
             out.append({"account_name": cols[0].get("value", ""), "account_type": cols[1].get("value", "")})
+    return out
+
+
+# ---------------------------------------------------------------------------
+# File-input mode: dict rows from an XLSX/CSV export (tolerant header aliases)
+# ---------------------------------------------------------------------------
+
+def _pick(row: dict, *aliases: str):
+    """First non-blank value whose header matches an alias (case/space/punctuation-insensitive)."""
+    norm = {re.sub(r"[^a-z0-9]", "", str(k).lower()): v for k, v in row.items()}
+    for a in aliases:
+        v = norm.get(a)
+        if v is not None and str(v).strip() != "":
+            return v
+    return None
+
+
+def _txt(v) -> Optional[str]:
+    if v is None:
+        return None
+    if isinstance(v, float) and v.is_integer():
+        v = int(v)
+    return str(v).strip() or None
+
+
+def _num(v) -> Optional[float]:
+    try:
+        return float(str(v).replace(",", "").replace("$", "").strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def from_lw_export_rows(rows: list[dict]) -> list[SourceRecord]:
+    """Linnworks stock export rows (SKU/ItemSKU, Name/Product Name/Title, Qty/Quantity/Stock, Price...)."""
+    out = []
+    for r in rows:
+        sku = _txt(_pick(r, "sku", "itemsku", "itemnumber"))
+        name = _txt(_pick(r, "name", "productname", "title", "itemtitle", "itemname")) or ""
+        if not sku and not name:
+            continue
+        out.append(SourceRecord(
+            source_system="linnworks", entity_type="sku", source_id=sku or name, name=name,
+            category=_txt(_pick(r, "category", "categoryname")),
+            amount=_num(_pick(r, "price", "retailprice", "salesprice")),
+            sku=sku, qty=_num(_pick(r, "qty", "quantity", "stock", "stocklevel", "instock", "qtyonhand")),
+            metadata=dict(r)))
+    return out
+
+
+def from_qbo_export_rows(rows: list[dict]) -> list[TargetRecord]:
+    """QBO product/service export rows. NB the 'SKU' column may really be the Item ID: keep it in
+    `sku` as exported and let mapping_engine.detect_sku_key() decide."""
+    out = []
+    for i, r in enumerate(rows):
+        name = _txt(_pick(r, "name", "fullyqualifiedname", "itemname", "productname", "productservicename", "title"))
+        if not name:
+            continue
+        act = str(_pick(r, "active", "status") or "true").strip().lower()
+        out.append(TargetRecord(
+            target_system="qbo", entity_type="item", target_id=_txt(_pick(r, "id", "itemid")) or str(i),
+            name=name, account_type=_txt(_pick(r, "type", "itemtype")),
+            active=act not in ("false", "no", "0", "inactive"),
+            sku=_txt(_pick(r, "sku", "itemsku")),
+            unit_price=_num(_pick(r, "unitprice", "price", "salesprice", "rate")),
+            qty=_num(_pick(r, "qtyonhand", "qty", "quantity", "quantityonhand", "stock")),
+            metadata=dict(r)))
     return out
