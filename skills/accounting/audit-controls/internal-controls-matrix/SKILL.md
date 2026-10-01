@@ -61,3 +61,5 @@ Do not test only the controls that are easy; do not accept "no exceptions noted"
 
 ## Output
 RCM workbook, SoD matrix with conflicts and compensating controls, test results with samples, deficiency log with severity and remediation plan.
+
+See also: `sox-testing` (workpaper and sample templates) and `sox-404-audit-support-methodology` (scoping, evidence standards, deficiency aggregation, ITGC/IPE).

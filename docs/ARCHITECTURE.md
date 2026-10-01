@@ -27,7 +27,7 @@ skills/                                 <- the ONLY place a SKILL.md may exist
   accounting/
     <stage>/<skill>/                    platform-neutral practice by lifecycle stage: setup, capture, journals, reconciliation,
                                         payables-receivables, close, reporting, planning, tax, payroll, audit-controls,
-                                        consolidation, revenue-inventory-assets
+                                        consolidation, revenue-inventory-assets, plus industries, advisory, treasury
     platforms/<platform>/<skill>/       quickbooks, xero, linnworks, shopify, zoho-books, ... one folder per system we run in SaaS
   marketing/<domain>/<skill>/           content, social, email, ads, cro, brand, video, strategy
   seo/<domain>/<skill>/                 technical, content, local, ai-search, analytics

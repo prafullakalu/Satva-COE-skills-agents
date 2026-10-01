@@ -55,6 +55,8 @@ Diagnostic shortcuts: compare activity not balance (this period's ledger movemen
 - **Payroll and tax**: balance equals what is due and not yet remitted. After remittance the account should return to the expected liability for the unpaid period only.
 - **Suspense**: should be zero at close; any balance is listed with age and owner.
 
+Break buckets (matched, amount, quantity, timing, GL-only, subledger-only), likely-cause tags, the one-sentence root-cause format, reconciling-item categories, ageing bands and example escalation thresholds are in `references/break-analysis-and-escalation.md`.
+
 ## 4. Tolerances and escalation
 
 Define tolerance per account type (for example zero for cash and tax, a small absolute amount for high-volume subledgers). Differences above tolerance, any difference older than two periods, and any unsupported manual journal to a control account are escalated to the reviewer and recorded.

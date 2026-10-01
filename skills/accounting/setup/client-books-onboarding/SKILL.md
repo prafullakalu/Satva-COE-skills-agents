@@ -7,9 +7,11 @@ metadata:
   domain: "setup"
   owner: "satva-coe"
   status: "beta"
-  license: "Satva-original"
-  source: "original"
+  license: "MIT"
+  source: "https://github.com/Receiptor-AI/bookkeeping-skills/tree/main/skills/bookkeeping-setup"
 ---
+
+<!-- Satva original, extended with a reference adapted from Receiptor-AI/bookkeeping-skills skills/bookkeeping-setup (MIT, Copyright (c) 2026 Receiptor AI). Modified by Satva: condensed, tool-agnostic. -->
 
 # Client books onboarding
 
@@ -80,3 +82,8 @@ A client file containing: entity fact sheet, conversion memo (cutoff, basis, loa
 - Load a year of history before the opening position is reconciled.
 - Store full account numbers, passwords or tax IDs in notes; reference the secure system instead.
 - Change fiscal year, basis or functional currency after posting without a documented restatement decision.
+
+## References
+
+- [references/bookkeeping-context-profile.md](references/bookkeeping-context-profile.md): a reusable context profile (entity, tax, accounting method, sources, approval thresholds), basis selection table, starter chart baseline, approval boundaries and a finishing checklist.
+- `client-close-profile`: the standing profile of close-governing facts (materiality, risk areas, schedules, estimation policies) to create once the books are live.

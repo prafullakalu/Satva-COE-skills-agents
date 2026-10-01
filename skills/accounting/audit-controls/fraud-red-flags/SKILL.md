@@ -62,3 +62,5 @@ Do not conclude fraud from an analytic hit; do not discuss suspicions broadly; d
 
 ## Output
 Test log (test, population, hits, reviewed, disposition), prioritised exception list with evidence references, recommended control changes, escalation memo if required.
+
+See also: `forensic-accounting` for the investigation phase once a red flag is substantiated (evidence handling, Benford script, report structure).

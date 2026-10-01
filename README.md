@@ -36,25 +36,29 @@
 
 ## What's inside
 
-**138 skills and 16 agents**, organised by department, one source of truth for the whole organisation. Pick the job,
-find the skill, and see which agent already uses it in the generated [**`CATALOG.md`**](CATALOG.md).
+**251 skills and 21 agents**, organised by department, one source of truth for the whole organisation. Pick the job,
+find the skill, and see which agent already uses it in the generated [**`CATALOG.md`**](CATALOG.md). **113 skills are
+adapted from 29 permissively licensed upstream repositories** (with attribution; see [`NOTICE.md`](NOTICE.md) and
+[`docs/SOURCES.md`](docs/SOURCES.md)); the rest are Satva-original, including all platform skills, which are written from the
+real tools of Satva's own MCP servers.
 
 | Department | Skills | What is in it |
 |---|---|---|
-| [`accounting/<stage>`](skills/accounting/) | 33 | Platform-neutral practice: setup, capture, journals, reconciliation, AP/AR, close, reporting, tax support, payroll, controls, audit, consolidation, revenue, inventory, forecasting |
+| [`accounting/<stage>`](skills/accounting/) | 146 | By lifecycle stage: setup, capture, journals, reconciliation, payables-receivables, close, reporting, planning, tax (US and 9 other jurisdictions), payroll, audit-controls, consolidation, revenue-inventory-assets, plus industries, advisory and treasury |
 | [`accounting/platforms`](skills/accounting/platforms/) | 44 | Doing the job inside one system with its real tools: linnworks 7 · quickbooks 12 · shopify 5 · stripe 3 · xero 12 · zoho-books 5 |
 | [`marketing`](skills/marketing/) | 28 | Strategy, content, brand, social, email, ads, conversion, launch, sales enablement, launch video |
 | [`seo`](skills/seo/) | 27 | Technical, analytics, local, keywords, content, authority, AI-search visibility |
 | [`satva`](skills/satva/) | 6 | Satva house formats: documents, guides, decks, product video, how Satva runs accounting work |
 
-Agents ([`agents/`](agents/)) are ready-made roles that each lean on a set of these skills: bookkeeper, controller,
-tax support, client onboarding, QuickBooks / Xero / Zoho Books / Stripe specialists, e-commerce accountant, marketing
-strategist, content writer, growth marketer, SEO auditor, SEO content strategist, launch-video producer and Satva document
-producer. See [`agents/README.md`](agents/README.md) for "which one do I use?".
+Agents ([`agents/`](agents/)) are ready-made roles that each lean on a set of these skills: bookkeeper, controller, tax support,
+international tax, client onboarding, CFO advisor, deal and valuation analyst, industry accountant, practice manager,
+QuickBooks / Xero / Zoho Books / Stripe specialists, e-commerce accountant, marketing strategist, content writer, growth
+marketer, SEO auditor, SEO content strategist, launch-video producer and Satva document producer. Every skill is used by at least
+one agent. See [`agents/README.md`](agents/README.md) for "which one do I use?".
 
 - **Developers:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) is the contract (layout, skill format, licence policy, Obot).
 - **Obot:** add this repository as **one** skill source; everything Obot indexes is under `skills/`.
-- **Quality:** each skill is `stable` (used in real work) or `beta` (written and reviewed, not yet exercised on a live system). Most new skills start as `beta`.
+- **Quality:** each skill is `stable` (used in real work) or `beta` (written or imported and reviewed, not yet exercised on a live system). Almost everything new is `beta`.
 
 Anybody or any organisation can use them (MIT). To use your own logo and colours, see [Make it your own brand](#make-it-your-own-brand).
 

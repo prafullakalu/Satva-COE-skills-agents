@@ -49,6 +49,8 @@ Match in this order and stop at the first strong match:
 
 Never match two items merely because they net to zero across unrelated payees.
 
+Confidence tiers, normalisation rules, a table of what may be auto-matched versus what needs approval, tests for stubborn differences (divisible by 9, double entries) and catch-up scenarios are in `references/matching-tiers-and-scenarios.md`.
+
 ## 4. Classify every unmatched item
 
 | Class | Action |

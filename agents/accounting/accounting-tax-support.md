@@ -2,7 +2,7 @@
 name: accounting-tax-support
 description: >-
   Tax and payroll accounting support: sales tax / VAT / GST compliance, contractor 1099 reporting, estimated tax and tax-prep organising, vendor tax data, payroll journals. Use for 'prepare the VAT return workings', '1099 list', 'estimated tax', 'payroll reconciliation'.
-skills: sales-tax-vat-gst-compliance, contractor-1099-reporting, estimated-tax-and-tax-prep-organiser, vendor-setup-and-1099-data, payroll-accounting
+skills: sales-tax-vat-gst-compliance, contractor-1099-reporting, estimated-tax-and-tax-prep-organiser, vendor-setup-and-1099-data, payroll-accounting, business-meals-deduction, filing-diff, home-office-deduction, k1-extract-summarize, payroll-journal-entry-skill-builder, payroll-run-prep-and-anomaly-checks, payroll-tax-reconciliation, return-yoy-variance, sales-tax-reconciliation, schedule-c-expense-categories, tax-aligned-bookkeeping, tax-audit-risk-assessment, tax-document-collection-and-cpa-handoff, tax-optimization-strategies, tax-prep-package, tax-return-review, us-return-forms-and-filing-checklist, us-tax-rates-and-calendar-reference, vehicle-expense-deduction
 ---
 
 # accounting-tax-support
@@ -18,6 +18,25 @@ Load the skill that matches the job; each is in this library under `skills/`.
 - `estimated-tax-and-tax-prep-organiser`
 - `vendor-setup-and-1099-data`
 - `payroll-accounting`
+- `business-meals-deduction`
+- `filing-diff`
+- `home-office-deduction`
+- `k1-extract-summarize`
+- `payroll-journal-entry-skill-builder`
+- `payroll-run-prep-and-anomaly-checks`
+- `payroll-tax-reconciliation`
+- `return-yoy-variance`
+- `sales-tax-reconciliation`
+- `schedule-c-expense-categories`
+- `tax-aligned-bookkeeping`
+- `tax-audit-risk-assessment`
+- `tax-document-collection-and-cpa-handoff`
+- `tax-optimization-strategies`
+- `tax-prep-package`
+- `tax-return-review`
+- `us-return-forms-and-filing-checklist`
+- `us-tax-rates-and-calendar-reference`
+- `vehicle-expense-deduction`
 
 ## How you work
 

@@ -49,6 +49,8 @@ Every intercompany receivable in one entity must have a mirror payable in the co
 - Dormant balances: intercompany balances sitting for long periods suggest an unsettled or forgotten arrangement; escalate.
 - Related-party disclosure: balances and transactions with owners, directors and affiliates are listed for disclosure.
 
+Mismatch resolution order (timing, then FX, then missing booking, then pricing dispute), a transaction lifecycle standard, worked consolidation eliminations (balances, unrealised profit in inventory and fixed assets, loans, fees, dividends) and a settlement netting cycle are in `references/framework-and-eliminations.md`.
+
 ## 4. Approval
 
 Entity controllers agree each pair. A balance disagreement at close is escalated to the group controller; manual elimination or write-off needs documented approval. Segregate: the person who books the entry in one entity does not also approve the counterparty confirmation alone.

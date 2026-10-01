@@ -1,0 +1,141 @@
+# Phase 7 — Output: Data-Pack JSON and Verifying a Portal JSON
+
+## Deliverable A — the data pack (default output)
+
+One annotated JSON file the user can hand to any assistant (or read themselves) to fill the portal
+mechanically. Save to the user's Downloads/working directory, named
+`ITR_datapack_<PAN>_AY<year>.json`. Validate it parses after writing.
+
+Required top-level sections (include only those relevant to the profile, but never omit a relevant one):
+
+```jsonc
+{
+  "_README": "what this is, AY, form, who prepared it, reconciliation status",
+  "rules_verification": { "one row per rate/limit/date used anywhere in this pack:
+                           { rule, value_used, source_url, checked_on } — e.g. slab table, standard
+                           deduction, 87A threshold, CG rates, 112A exemption, surcharge tiers, audit
+                           limit, due date. Official sources (incometaxindia.gov.in / incometax.gov.in)
+                           preferred; a rule with no row here means it was NOT verified — fix before
+                           delivering" },
+  "meta": { "assessment_year", "form": "ITR-1|2|3|4", "regime", "regime_action (10-IEA needed or not)",
+             "filing_section": "139(1)", "due_date", "due_date_consequences" },
+  "taxpayer": { "name", "pan", "dob", "aadhaar: TODO", "address", "email", "mobile: TODO",
+                 "residential_status + basis", "bank_accounts[] (no, IFSC, refund-nominee flag)" },
+  "salary":   { "employers[] (name, tan, period, gross 17(1)/(2)/(3), component breakup,
+                 employer regime, quarterly TDS w/ receipt numbers)",
+                 "exemptions_sec10 (item, amount, statutory basis)",
+                 "totals (single standard deduction!)" },
+  "house_property": {},
+  "capital_gains": { "per bucket: scripwise rows (ISIN, qty, cost, consideration, dates), intra-CG set-off,
+                      quarterwise gains, net + carry-forward",
+                      "csv_ready_112A": "one entry per scrip with PRE-DERIVED per-unit values so the
+                       filling agent can populate the portal's 112A CSV template mechanically: ISIN,
+                       scrip name, security type, quantity, sale price PER UNIT, cost PER UNIT,
+                       FMV-per-unit as on 31-Jan-2018 (pre-2018 holdings only), acquisition date and
+                       transfer date as raw dates (the agent applies whatever cliff codes the current
+                       template uses), per-scrip transfer expenditure, fmv_source per pre-2018 scrip
+                       (broker column / 31-Jan-2018 exchange high / AMFI NAV); rows with unknown
+                       acquisition date or cost carry a VERIFY flag naming what the user must supply",
+                      "csv_generation_notes": "instructions embedded for the filling agent: download
+                       the portal's own CSV template for THIS AY and map into its exact headers (they
+                       gain columns when law changes — never reuse a remembered layout); dates
+                       DD/MM/YYYY; amounts in plain rupees; ISIN exact 12 chars; don't edit headers;
+                       no trailing blank rows; identical BE/AE codes mean DIFFERENT cliffs in
+                       different columns (acquisition vs transfer) — read each column's help text;
+                       if the upload rejects negative/loss rows, fall back to manual Add-Another rows
+                       or direct net entry; if any field is missing here or needs reconciling at
+                       runtime, pull it from the attached broker tax report" },
+  "business_fno": { "classification, turnover, audit determination + reasoning, gross P&L,
+                     itemized expenses, net, nature-of-business code" },
+  "other_sources": { "interest per account, dividend (quarterwise), refund interest 244A, family pension…" },
+  "foreign": { "schedule FA rows, FSI, FTC computation working + Form 67 status, documented_choices
+               (A3 per-tranche vs aggregated, A2-vs-A3 classification, conversion rates used)" },
+  "brought_forward_losses": { "per-AY vintage from prior ITR's ScheduleCFL/ScheduleUD: type, opening
+                               amount, absorbed this year, closing, expiry AY; source: filed JSON or
+                               143(1) intimation" },
+  "setoff_cyla_bfla": { "explicit set-off trail: what absorbed what" },
+  "losses_carried_forward": { "per vintage, with the file-by-due-date condition stated" },
+  "deductions_via": { "per section, only regime-valid ones counted; others listed as not-claimable" },
+  "tax_computation": { "slab walk, special-rate items, rebate, surcharge+marginal relief, cess, total" },
+  "taxes_paid": { "TDS rows (TAN, amount), TCS, advance tax challans, SAT challans w/ CIN" },
+  "balance_and_interest": { "assessed tax, 234A/B/C with month counts, TOTAL TO PAY, cost-of-delay per month" },
+  "ais_reconciliation": { "per-item match status; every unresolved item as an explicit VERIFY flag" },
+  "verification_checklist_before_submit": [ "SAT paid + CIN entered", "e-verify within 30 days", "…" ]
+}
+```
+
+Conventions: amounts INR integers (paise only where source has them), dates YYYY-MM-DD, every figure
+traceable to the Phase 2/3 ledger, `TODO`/`VERIFY` prefixes for anything only the user can confirm.
+The final chat message must list all open TODO/VERIFY items — the pack is not "done" while any remain.
+
+**Validate the JSON parses after every single edit, not just at the end.** These packs grow to
+hundreds of lines with deep nesting; one misplaced brace from a mid-file insertion breaks the whole
+file silently until something tries to parse it. Run
+`python3 -c "import json; json.load(open(path))"` (or equivalent) immediately after each write —
+catching a syntax error right after the edit that caused it is far cheaper than debugging it later
+once several more edits have piled on top.
+
+## Deliverable B — verifying an official ITR JSON (portal/utility export)
+
+The portal's JSON is `{"ITR": {"ITR3": {...schedules...}}}` (or ITR1/2/4). Schedule names:
+`PartA_GEN1` (personal + filing status + regime flags `Form10IEAEarlierAYOldRegime`/`F10IEACurrAYOldRegime`),
+`ScheduleS`, `ScheduleHP`, `ScheduleCGFor23` + `ScheduleSI` (special incomes), `ITR3ScheduleBP`,
+`PARTA_PL`/`TradingAccount`/`PARTA_BS`, `ScheduleOS`, `ScheduleCYLA/BFLA/CFL`, `ScheduleVIA`,
+`ScheduleFA/FSI/TR`, `ScheduleTDS1/TDS2/TCS/IT`, `PartB-TI`, `PartB_TTI`, `Verification`.
+Schedule/field names drift across AYs — treat this list as the AY 2026-27 shape and re-derive the
+actual names from the JSON in hand.
+
+Verification procedure:
+1. Parse and extract every material leaf: salary per TAN, exemptions, each OS line, CG rows, BP totals,
+   CYLA/CFL, `PartB-TI.TotalIncome`, `PartB_TTI` tax/interest/`BalTaxPayable`, bank accounts, TDS rows.
+2. **Recompute independently from source documents** (never from the JSON's own intermediate figures)
+   and diff line by line.
+3. For every mismatch report: field, JSON value, your value, source evidence, ₹ impact, and whether it
+   over- or under-reports income. A figure in the JSON with NO source (e.g., an interest line you can't
+   find in AIS/26AS) is a first-class finding — ask the user, don't assume either way; it may come from
+   a source you weren't given (26AS refund interest is the classic).
+4. Check structural traps: single standard deduction; regime flags consistent with the chosen regime;
+   losses in CFL only if due date holds; `SelfAssessmentTax` > 0 and CIN present if there was a payable;
+   dividend quarterwise filled; 112A scripwise present; Chapter VI-A total ≤ gross total income and
+   nothing regime-invalid claimed; **Schedule AL present if total income exceeds its threshold**;
+   Schedule FA present if ROR with foreign assets; TCS credits from 26AS claimed; agri > ₹5,000 not
+   sitting in an ITR-1/4.
+5. When two JSONs exist (user edited something), flat-diff them (`old vs new leaves`) and report what
+   changed, whether it was needed, and the ₹ impact — users often make cosmetic edits they think are
+   substantive and vice versa.
+
+**Reconciliation technique — decompose the gap, don't re-derive from scratch.** When the user reports
+"the refund/payable I see doesn't match what you computed," the fast path is: take the observed ₹
+delta and explain it as a small number of named, individually-verifiable components (a missing
+schedule entry, an unclaimed credit, a relief pending a prerequisite filing) rather than recomputing
+the whole return from zero. Confirm the components sum to (approximately) the observed gap before
+presenting the explanation — that sum check is what turns a guess into a verified finding.
+
+## Deliverable C — final pre-submission diff against the portal's own generated JSON (strongly recommended)
+
+After the user has entered everything on the portal and it validates cleanly (no schedule errors),
+most portal/utility flows generate a JSON at that point, before final submission. **Offer this proactively as the
+standard closing step — don't wait to be asked.** It is not a completion gate: if the user takes the
+data pack and files independently, put the recommendation in the pre-filing checklist and close cleanly. It is the only artifact that
+reflects exactly what the department will actually receive, including anything the portal itself
+silently defaulted or omitted (a credit schedule left empty despite the underlying figure existing in
+AIS/26AS; a relief not yet reflected pending a prerequisite filing like Form 67).
+
+Run the same procedure as Deliverable B against it. Frame this to the user as a routine last check
+before an action that's hard to walk back cleanly, not as a sign something is expected to be wrong.
+
+## Handing off the portal data entry
+
+Don't make the user assemble the handoff themselves. **End your final message with a short filing note**
+pre-filled with this filer's actual pack filename, AY, and any case-specific flags (e.g. "has
+csv_ready_112A — use the CSV template route", open VERIFY items), in a copyable block, to give to whoever
+enters the data on the portal along with the pack.
+
+End the note — and your own closing words to the user — with the stay-in-the-loop close:
+- "Once the portal data entry is done and the portal validates, download the portal's JSON and
+  bring it back to me — I'll reconcile it line-by-line against the pack (Deliverable C) and give you
+  a final sign-off before you pay and submit."
+- "If validation errors pop up, either let the agent fix them, or send me a screenshot and I'll fix
+  it or tell the agent exactly what to do."
+You are the user's preparer until the return is filed — the handoff delegates data entry, not
+responsibility.

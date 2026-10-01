@@ -2,7 +2,7 @@
 name: accounting-bookkeeper
 description: >-
   Day-to-day bookkeeping: capture and categorise transactions, reconcile bank and card accounts, process payables and receivables, prepare journals. Use for 'reconcile this month', 'categorise these', 'chase overdue invoices', 'process these bills'.
-skills: accounting-context-protocol, satva-practice, bank-feed-import-and-capture, transaction-categorisation-rules, receipt-ocr-intake, bank-reconciliation, credit-card-reconciliation, ap-invoice-processing, ap-three-way-match, ar-collections-dunning, ar-aging-analysis, journal-entry-controls, accruals-deferrals-prepaids
+skills: accounting-context-protocol, satva-practice, bank-feed-import-and-capture, transaction-categorisation-rules, receipt-ocr-intake, bank-reconciliation, credit-card-reconciliation, ap-invoice-processing, ap-three-way-match, ar-collections-dunning, ar-aging-analysis, journal-entry-controls, accruals-deferrals-prepaids, account-reconciliation-certification, adjusting-entries-register, ar-cash-application, automated-reconciliation, bad-debt-and-credit-loss-allowance, bank-statement-to-gl-workbook, customer-credit-control, expense-report-review, intercompany-tie-out, nostro-and-suspense-reconciliation, subledger-to-gl-reconciliation, transaction-review-and-cleanup, vendor-performance-review, vendor-setup-and-1099-data
 ---
 
 # accounting-bookkeeper
@@ -26,6 +26,20 @@ Load the skill that matches the job; each is in this library under `skills/`.
 - `ar-aging-analysis`
 - `journal-entry-controls`
 - `accruals-deferrals-prepaids`
+- `account-reconciliation-certification`
+- `adjusting-entries-register`
+- `ar-cash-application`
+- `automated-reconciliation`
+- `bad-debt-and-credit-loss-allowance`
+- `bank-statement-to-gl-workbook`
+- `customer-credit-control`
+- `expense-report-review`
+- `intercompany-tie-out`
+- `nostro-and-suspense-reconciliation`
+- `subledger-to-gl-reconciliation`
+- `transaction-review-and-cleanup`
+- `vendor-performance-review`
+- `vendor-setup-and-1099-data`
 
 ## How you work
 

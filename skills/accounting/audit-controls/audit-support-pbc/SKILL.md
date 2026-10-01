@@ -59,3 +59,5 @@ Do not provide documents you have not reviewed; do not edit source records after
 
 ## Output
 PBC list with owners and due dates, tracker, indexed support folder, tie-out sheet, post-audit action log.
+
+See also: `sox-404-audit-support-methodology` (evidence standards, sampling) and `sox-testing` (testing workpapers).

@@ -7,9 +7,11 @@ metadata:
   domain: "transaction-capture"
   owner: "satva-coe"
   status: "beta"
-  license: "Satva-original"
-  source: "original"
+  license: "MIT"
+  source: "https://github.com/Receiptor-AI/bookkeeping-skills/tree/main/skills/receipt-processing"
 ---
+
+<!-- Satva original, extended with references and a script adapted from Receiptor-AI/bookkeeping-skills skills/receipt-processing (MIT, Copyright (c) 2026 Receiptor AI). Modified by Satva: vendor-specific extraction tool references removed. -->
 
 # Receipt and document OCR intake
 
@@ -74,3 +76,10 @@ A table per batch: document ID, supplier, date, currency, subtotal, tax, total, 
 - Trust OCR digits on a handwritten amount.
 - Treat a statement or order confirmation as an invoice.
 - Delete the source file after posting.
+
+## References and script
+
+- [references/output-schema.md](references/output-schema.md): normalised receipt record (required and recommended fields, line items, JSON example, CSV column order, draft-ledger extension with review status).
+- [references/execution-policy.md](references/execution-policy.md): evidence rules (a statement is not a receipt), what is safe to automate, what needs approval, escalation triggers, and the run output requirements. Prefer a source with provenance: extraction from the original email or file beats re-keying, and OCR of a photo is the last resort. Bank and card statements are a gap-finding source only.
+- `scripts/receipt_summary.py`: local, read-only completeness summary for a JSON array of extracted records (required fields `vendor_name`, `date`, `total_amount`, `currency`). Run: `python scripts/receipt_summary.py records.json`.
+- Meals and entertainment: never invent business purpose or attendees; leave the field empty and flag it.

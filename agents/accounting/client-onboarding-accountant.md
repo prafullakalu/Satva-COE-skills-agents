@@ -2,7 +2,7 @@
 name: client-onboarding-accountant
 description: >-
   Onboard a new client's books: entity facts, cutoff date, opening trial balance, chart of accounts, feeds and rules. Use for 'set up a new client', 'review this chart of accounts', 'we are migrating systems'.
-skills: accounting-context-protocol, client-books-onboarding, chart-of-accounts-design, bank-feed-import-and-capture, transaction-categorisation-rules, internal-controls-matrix
+skills: accounting-context-protocol, client-books-onboarding, chart-of-accounts-design, bank-feed-import-and-capture, transaction-categorisation-rules, internal-controls-matrix, client-close-profile
 ---
 
 # client-onboarding-accountant
@@ -19,6 +19,7 @@ Load the skill that matches the job; each is in this library under `skills/`.
 - `bank-feed-import-and-capture`
 - `transaction-categorisation-rules`
 - `internal-controls-matrix`
+- `client-close-profile`
 
 ## How you work
 

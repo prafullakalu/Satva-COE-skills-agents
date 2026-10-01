@@ -7,9 +7,11 @@ metadata:
   domain: "transaction-capture"
   owner: "satva-coe"
   status: "beta"
-  license: "Satva-original"
-  source: "original"
+  license: "MIT"
+  source: "https://github.com/Receiptor-AI/bookkeeping-skills/tree/main/skills/expense-categorization"
 ---
+
+<!-- Satva original, extended with references and a script adapted from Receiptor-AI/bookkeeping-skills skills/expense-categorization (MIT, Copyright (c) 2026 Receiptor AI). Modified by Satva: generalised beyond US tax lines. -->
 
 # Transaction categorisation and bank rules
 
@@ -75,3 +77,13 @@ For a batch: transaction, proposed account, tax code, tier, reason, rule hit (if
 - Create a rule from one example.
 - Let a rule override a match to an open bill.
 - Recode locked or reconciled periods; use a reclass journal.
+
+## Auto-assign versus review
+
+Full rules in [references/decision-rules.md](references/decision-rules.md). Auto-assign only when the vendor is a known match, line items support the category, the amount fits previously approved transactions and the item is not mixed personal and business. Send to review when the vendor is ambiguous, line items are missing, a split may be needed, the treatment affects depreciation, meals, vehicle, home office or contractor reporting, it looks personal or reimbursable, confidence is low, the user has historically overridden similar items, or the category would materially affect tax or owner equity.
+
+## References and script
+
+- [references/vendor-signals-and-splits.md](references/vendor-signals-and-splits.md): signal order (vendor, line items, amount pattern, learned corrections), ambiguous vendors, a split worked example and common mistakes.
+- `scripts/category_review_summary.py`: local, read-only summary of a JSON array of categorised records (counts by confidence, review status and category). Run: `python scripts/category_review_summary.py records.json`. Each record may carry `category`, `confidence`, `review_status`.
+- For a period-end sweep of what rules missed, use `transaction-review-and-cleanup`.

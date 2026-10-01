@@ -1,0 +1,2 @@
+id,class,source,supplier_gstin,supplier_name,doc_type,doc_no,doc_date,books_taxable,books_igst,books_cgst,books_sgst,books_cess,portal_taxable,portal_igst,portal_cgst,portal_sgst,portal_cess,diff_tax,cause,action,owner,due_by,status
+1,B,purchase_register_vs_2b,27AAAAA0000A1Z5,Example Supplier Pvt Ltd,INV,INV/2026/001,2026-06-14,100000,0,9000,9000,0,,,,,,18000,Supplier has not filed GSTR-1 for the period,Chase supplier; do not claim this period; track for a later period within s16(4),Accounts payable,2026-11-30,open

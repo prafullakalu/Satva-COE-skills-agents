@@ -7,9 +7,11 @@ metadata:
   domain: "journal-entries"
   owner: "satva-coe"
   status: "beta"
-  license: "Satva-original"
-  source: "original"
+  license: "Apache-2.0"
+  source: "https://github.com/anthropics/knowledge-work-plugins/tree/main/finance/skills/journal-entry-prep"
 ---
+
+<!-- Satva original, extended with references adapted from anthropics/knowledge-work-plugins finance/skills/journal-entry-prep (Apache-2.0). Modified by Satva: condensed into references/standard-entry-patterns.md. -->
 
 # Accruals, deferrals and prepaids
 
@@ -86,3 +88,8 @@ The accrual and prepaid schedules, the journal entries (with reversal dates), a 
 - Release deferred revenue by guess; tie to the service term or milestone.
 - Leave stale accruals on the balance sheet quarter after quarter.
 - Book accruals in a locked period.
+
+## References
+
+- [references/standard-entry-patterns.md](references/standard-entry-patterns.md): entry patterns for AP, payroll, depreciation, prepaid and revenue accruals with documentation requirements.
+- Roll-forward schedule formats (prepaid, fixed assets, deferred revenue, standing accruals, loans) are in `adjusting-entries-register`, which runs these mechanics for the whole period and builds the approved entry file.

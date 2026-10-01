@@ -74,6 +74,10 @@ Under standard costing, price variance goes to a variance account; under actual 
 
 The buyer, the receiver and the AP processor are different people for material purchases. Receipt is entered by whoever physically receives, not by purchasing. Changes to PO price or quantity after issue need approval and a version trail. Matching overrides are logged with reason and approver.
 
+## Wording the exceptions
+
+Each exception carries vendor, invoice number, both figures and the money impact (for example: "inv 88231 line 2: billed 1,240 per unit, PO says 1,160, 2 units, 160 over"). Default tolerances for clients with no policy, the six standard exception phrasings, and how to use vendor statements to find gaps are in the `ap-invoice-processing` skill, `references/matching_and_exceptions.md`. Asymmetry is deliberate: billed for more units than arrived is an error or worse every time; a small price move is often just the market.
+
 ## Output
 
 Match worksheet per invoice (PO, receipt, invoice, variances, result), exception list with owner and age, GRNI listing and proposed accrual journal in draft.

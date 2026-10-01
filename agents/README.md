@@ -12,7 +12,13 @@ agent beside the skills it uses.
 | Close the month, explain variances, board pack, controls, audit support | `accounting-controller` |
 | VAT / sales tax workings, 1099s, estimated tax, payroll reconciliation | `accounting-tax-support` |
 | Set up a new client's books | `client-onboarding-accountant` |
-| The system is Xero / Zoho Books / Stripe | `xero-specialist` · `zoho-books-specialist` · `stripe-reconciliation-analyst` |
+| Non-US tax and payroll (India, Australia, Canada, UK, Ireland, Sweden, UAE, Israel, EU) | `international-tax-specialist` |
+| Budget, forecast, runway, scenarios, treasury, fundraising readiness | `cfo-advisor` |
+| Valuation, comps, LBO, M&A, quality of earnings, diligence lists | `deal-valuation-analyst` |
+| The client's industry changes the accounting (SaaS, nonprofit, construction, real estate, ...) | `industry-accountant` |
+| Run an accounting firm: engagement letters, onboarding SOPs, SOP audits | `accounting-practice-manager` |
+| The system is QuickBooks / Xero / Zoho Books / Stripe | `quickbooks-specialist` · `xero-specialist` · `zoho-books-specialist` · `stripe-reconciliation-analyst` |
+| Linnworks and Shopify: orders, payouts, stock vs ledger, marketplace posting | `ecommerce-accountant` |
 | Positioning, ICP, competitors, launch plan, pricing | `marketing-strategist` |
 | Write or edit content | `content-writer` |
 | Email, ads, landing pages, tests, attribution | `growth-marketer` |

@@ -64,3 +64,5 @@ Do not adjust COGS to hit a margin; do not write off stock without a count and a
 
 ## Output
 Inventory roll-forward (opening + receipts - COGS +/- adjustments = closing), valuation tie-out, reserve calculation, margin by SKU/channel with exceptions.
+
+See also: `inventory-costing` (IAS 2 / ASC 330 overhead absorption and NRV with a verified script) and `inventory-reorder-planner` (velocity-based reordering).
