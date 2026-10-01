@@ -18,9 +18,9 @@
 
 ### ▶ Watch: the Satva Ledger marketing video
 
-<a href="https://prafullakalu.github.io/Satva-COE-skills-agents/examples/satva-ledger-video/watch.html"><img src="examples/satva-ledger-video/Satva-Ledger-Sizzle-preview.gif" alt="Preview of the Satva Ledger marketing video: the mascot reviews a purchase, asks for approval, finds unused vendor credits" width="100%"></a>
+<a href="examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4"><img src="examples/satva-ledger-video/Satva-Ledger-Sizzle-preview.gif" alt="Preview of the Satva Ledger marketing video: the mascot reviews a purchase, asks for approval, finds unused vendor credits" width="100%"></a>
 
-<b><a href="https://prafullakalu.github.io/Satva-COE-skills-agents/examples/satva-ledger-video/watch.html">▶ Click to play the full 82-second video, with sound</a></b> · <a href="examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4">download the MP4</a>
+<b><a href="examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4">▶ Click to play the full 82-second video, with sound</a></b> · <a href="examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4">download the MP4</a>
 
 <sub>The animation above is a silent 28-second preview; the link opens the full video in a player page. 1080p · made with <a href="skills/satva/video/satva-ledger-marketing-video/SKILL.md"><code>satva-ledger-marketing-video</code></a>. Demo figures from a QuickBooks Online sandbox; voice and sound effects by <a href="https://elevenlabs.io">ElevenLabs</a>; the score is synthesised in code.</sub>
 
@@ -157,7 +157,7 @@ the generator and the voice script.
 ### 1 · Get the repo
 
 ```bash
-git clone https://github.com/prafullakalu/Satva-COE-skills-agents.git
+git clone https://github.com/satva-git/Satva-COE-skills-agents.git
 cd Satva-COE-skills-agents
 ```
 
