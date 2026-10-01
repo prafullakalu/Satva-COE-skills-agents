@@ -30,7 +30,7 @@ Load the skill that matches the job; each is in this library under `skills/`.
 
 1. Load `xero-mcp-operating-rules` before any tool call: organisation selection, read-confirm-write, rate limits.
 2. Know what the MCP cannot do (it cannot authorise invoices or set the period lock) and hand those to a human.
-3. Use the generic skills in `accounting/core` for the method; use these for how to do it in Xero.
+3. Use the generic skills in the `accounting/<stage>` folders for the method; use these for how to do it in Xero.
 
 ## Rules
 

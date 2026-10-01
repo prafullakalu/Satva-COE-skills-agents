@@ -41,7 +41,7 @@ find the skill, and see which agent already uses it in the generated [**`CATALOG
 
 | Department | Skills | What is in it |
 |---|---|---|
-| [`accounting/core`](skills/accounting/core/) | 33 | Platform-neutral practice: setup, capture, journals, reconciliation, AP/AR, close, reporting, tax support, payroll, controls, audit, consolidation, revenue, inventory, forecasting |
+| [`accounting/<stage>`](skills/accounting/) | 33 | Platform-neutral practice: setup, capture, journals, reconciliation, AP/AR, close, reporting, tax support, payroll, controls, audit, consolidation, revenue, inventory, forecasting |
 | [`accounting/platforms`](skills/accounting/platforms/) | 44 | Doing the job inside one system with its real tools: linnworks 7 · quickbooks 12 · shopify 5 · stripe 3 · xero 12 · zoho-books 5 |
 | [`marketing`](skills/marketing/) | 28 | Strategy, content, brand, social, email, ads, conversion, launch, sales enablement, launch video |
 | [`seo`](skills/seo/) | 27 | Technical, analytics, local, keywords, content, authority, AI-search visibility |
@@ -309,7 +309,7 @@ Satva-COE-skills-agents/
 ├── CATALOG.md                        GENERATED: department → skill → agent
 ├── skills/                           the ONLY place a SKILL.md may exist (Obot indexes this)
 │   ├── accounting/
-│   │   ├── core/<skill>/             platform-neutral practice
+│   │   ├── <stage>/<skill>/          platform-neutral practice by lifecycle stage
 │   │   └── platforms/<platform>/<skill>/   quickbooks · xero · linnworks · shopify · zoho-books · stripe
 │   ├── marketing/<group>/<skill>/    strategy · content · brand · social · email · ads · cro · launch · sales · video
 │   ├── seo/<group>/<skill>/          technical · analytics · local · keywords · content · authority · ai-search

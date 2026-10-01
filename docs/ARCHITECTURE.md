@@ -25,7 +25,9 @@
 ```
 skills/                                 <- the ONLY place a SKILL.md may exist
   accounting/
-    core/<skill>/                       platform-neutral practice (setup, capture, journals, reconciliation, AP/AR, close, reporting, tax, payroll, audit)
+    <stage>/<skill>/                    platform-neutral practice by lifecycle stage: setup, capture, journals, reconciliation,
+                                        payables-receivables, close, reporting, planning, tax, payroll, audit-controls,
+                                        consolidation, revenue-inventory-assets
     platforms/<platform>/<skill>/       quickbooks, xero, linnworks, shopify, zoho-books, ... one folder per system we run in SaaS
   marketing/<domain>/<skill>/           content, social, email, ads, cro, brand, video, strategy
   seo/<domain>/<skill>/                 technical, content, local, ai-search, analytics
@@ -40,7 +42,7 @@ install.sh / install.ps1                installers (nested-aware, `--dept` filte
 examples/ docs/img/                     samples; never contain a SKILL.md
 ```
 
-Depth is fixed: `skills/<department>/<group>/<skill>/SKILL.md`, or for platforms
+Depth is fixed: `skills/<department>/<group>/<skill>/SKILL.md` (for accounting the group is a lifecycle stage), or for platforms
 `skills/accounting/platforms/<platform>/<skill>/SKILL.md`.
 
 ## 4. The skill contract
@@ -72,7 +74,7 @@ Trust tiers: `Satva-original` (we wrote and own it), permissive third-party (ada
 
 | Department | Covers | Typical consumer |
 |---|---|---|
-| `accounting/core` | How a bookkeeper works, independent of software | Accountants, the Satva Ledger agent |
+| `accounting/<stage>` | How an accountant works, independent of software, one folder per lifecycle stage | Accountants, the Satva Ledger agent |
 | `accounting/platforms/*` | Doing the job inside one system, using its real tool names | Accountants, integration developers |
 | `marketing` | Content, social, email, ads, conversion, brand, launch video | Marketing, sales |
 | `seo` | Technical SEO, content, local, AI-search visibility | Marketing, web developers |
