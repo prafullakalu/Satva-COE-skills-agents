@@ -5,7 +5,7 @@ __pycache__/
 .render-*
 gif/frames/
 .DS_Store
-skills/feature-launch-video/scripts/shared-assets/
+skills/marketing/video/feature-launch-video/scripts/shared-assets/
 
 # local tooling telemetry
 .planning/
