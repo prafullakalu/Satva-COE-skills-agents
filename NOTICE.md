@@ -6,8 +6,8 @@ Code and documentation are released under the [MIT License](LICENSE).
 
 ## Branding
 
-`skills/satva-guide-gif/assets/satva-header.png` and `satva-footer.png` carry the Satva Solutions name and
-logo. They are included so the Satva house style can be reproduced (the official logo files under `skills/satva-ledger-marketing-video/pipeline/video-build/satva-sizzle/assets/` are Satva's likewise) and are **not** licensed for use as the
+`skills/satva/docs/satva-guide-gif/assets/satva-header.png` and `satva-footer.png` carry the Satva Solutions name and
+logo. They are included so the Satva house style can be reproduced (the official logo files under `skills/satva/video/satva-ledger-marketing-video/pipeline/video-build/satva-sizzle/assets/` are Satva's likewise) and are **not** licensed for use as the
 branding of another organisation's documents. If you are not Satva, replace them with your own (see the README
 section "Make it your own brand").
 
@@ -15,9 +15,9 @@ section "Make it your own brand").
 
 | File | Font | Licence |
 |---|---|---|
-| `skills/satva-guide-gif/assets/Mulish-*.ttf` | Mulish, © The Mulish Project Authors | SIL Open Font License 1.1 — [`OFL-Mulish.txt`](skills/satva-guide-gif/assets/OFL-Mulish.txt) |
-| `skills/satva-guide-gif/assets/RobotoMono.ttf` | Roboto Mono, © The Roboto Mono Project Authors | SIL Open Font License 1.1 — [`OFL-RobotoMono.txt`](skills/satva-guide-gif/assets/OFL-RobotoMono.txt) |
-| `skills/satva-ledger-marketing-video/pipeline/video-build/satva-sizzle/assets/fonts/` | Mulish (woff2) and Geist Mono, © Vercel / basement.studio | SIL Open Font License 1.1 — `OFL-Mulish.txt`, `OFL-GeistMono.txt` in the same folder |
+| `skills/satva/docs/satva-guide-gif/assets/Mulish-*.ttf` | Mulish, © The Mulish Project Authors | SIL Open Font License 1.1 — [`OFL-Mulish.txt`](skills/satva/docs/satva-guide-gif/assets/OFL-Mulish.txt) |
+| `skills/satva/docs/satva-guide-gif/assets/RobotoMono.ttf` | Roboto Mono, © The Roboto Mono Project Authors | SIL Open Font License 1.1 — [`OFL-RobotoMono.txt`](skills/satva/docs/satva-guide-gif/assets/OFL-RobotoMono.txt) |
+| `skills/satva/video/satva-ledger-marketing-video/pipeline/video-build/satva-sizzle/assets/fonts/` | Mulish (woff2) and Geist Mono, © Vercel / basement.studio | SIL Open Font License 1.1 — `OFL-Mulish.txt`, `OFL-GeistMono.txt` in the same folder |
 
 ## Third-party software (not bundled)
 
@@ -38,9 +38,42 @@ were generated with the ElevenLabs API on a **free plan**: that output is non-co
 have generated your own on a paid plan. The score is original (synthesised in code). Figures are QuickBooks
 Online sandbox data. The video is Satva Solutions' own marketing content and is not covered by the MIT licence.
 
+## Third-party skill content
+
+The skills under `skills/` are Satva-original unless a skill's own frontmatter says otherwise
+(`metadata.license` and `metadata.source`). The following 13 marketing skills are adapted from
+[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills), which is MIT licensed:
+`paid-ads-campaigns`, `ab-test-design`, `landing-page-cro`, `marketing-analytics-tracking`, `marketing-attribution`, `pricing-page-strategy`, `cold-outbound-email`, `email-lifecycle-sequences`, `onboarding-activation`, `product-launch-plan`, `referral-partner-programs`, `lead-magnets-gated-content`, `sales-enablement-kit`.
+
+> MIT License
+>
+> Copyright (c) 2025 Corey Haines
+>
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+> of this software and associated documentation files (the "Software"), to deal
+> in the Software without restriction, including without limitation the rights
+> to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> copies of the Software, and to permit persons to whom the Software is
+> furnished to do so, subject to the following conditions:
+>
+> The above copyright notice and this permission notice shall be included in all
+> copies or substantial portions of the Software.
+>
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+> SOFTWARE.
+
+Each adapted skill keeps a one-line attribution comment under its frontmatter. Every other upstream repository that
+was reviewed, with its licence and whether anything was used, is recorded in [`docs/SOURCES.md`](docs/SOURCES.md).
+Repositories without a permissive licence are linked there and **not** copied.
+
 ## Illustrations and sample data
 
-The screens in `skills/satva-guide-gif/examples/` and `examples/setup-guide-sample/` are neutral illustrations
+The screens in `skills/satva/docs/satva-guide-gif/examples/` and `examples/setup-guide-sample/` are neutral illustrations
 with invented data. No real credentials, customers or third-party interfaces appear in them. Figures in the
 example video briefs are labelled demo data. The figures in the Satva Ledger sizzle generator come from a
 QuickBooks Online **sandbox** company and are labelled "Sandbox data" on screen; QuickBooks is a trademark of Intuit.

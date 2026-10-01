@@ -1,6 +1,13 @@
 ---
 name: satva-ledger-marketing-video
 description: Reference pipeline to FORK for a longer "sizzle" / hero marketing video — the Satva Ledger (AI accounting agent) 82-second promo. A generator script builds the HyperFrames composition from data, an original SVG mascot animates it, and a Python audio pipeline makes the ElevenLabs voice + SFX, an original synthesised score, the ducked mix and measured QA. Use when asked to rebuild, re-render or adapt the Satva Ledger / accounting-agent marketing video, or to make a multi-chapter promo with a mascot and beat-synced sound design. For a quick launch video of ANY single feature, use feature-launch-video instead.
+metadata:
+  department: "satva"
+  domain: "video"
+  owner: "satva-coe"
+  status: "stable"
+  license: "Satva-original"
+  source: "original"
 ---
 
 # Satva Ledger marketing video — the reference pipeline

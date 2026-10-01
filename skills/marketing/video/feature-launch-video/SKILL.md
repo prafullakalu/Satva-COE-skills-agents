@@ -1,6 +1,13 @@
 ---
 name: feature-launch-video
 description: Generate a marketing/launch video for any feature of any product — reads the real user flow, writes a grounded brief, picks a visual theme, composes and renders a HyperFrames video, produces fully original voice/music/SFX (no copyrighted audio, ever), and mixes to broadcast-ready audio. Use when someone asks for a promo/launch/demo/sizzle video for a feature, module, or product.
+metadata:
+  department: "marketing"
+  domain: "video"
+  owner: "satva-coe"
+  status: "stable"
+  license: "Satva-original"
+  source: "original"
 ---
 
 # feature-launch-video

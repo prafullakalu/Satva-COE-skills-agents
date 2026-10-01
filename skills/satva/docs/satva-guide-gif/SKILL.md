@@ -1,6 +1,13 @@
 ---
 name: satva-guide-gif
 description: Produce a Satva house-format setup/user guide for any web feature — annotated full-screen screenshots with numbered callout rings, a cursor-animated narrated GIF of the whole flow, and a branded A4 PDF (SATVA banner header, contact footer, Mulish, cover page + Version History) with the GIF storyboard embedded at the end. Use when asked for a user guide, setup guide, feature documentation, walkthrough or demo GIF, annotated screenshots for a doc, or "document this feature like the Xero/Shopify MCP guide". Captures a LOCALLY RUNNING app seeded with fake data, so use it after the feature works.
+metadata:
+  department: "satva"
+  domain: "docs"
+  owner: "satva-coe"
+  status: "stable"
+  license: "Satva-original"
+  source: "original"
 ---
 
 # Satva guide + GIF pipeline

@@ -7,6 +7,14 @@ description: >
   and reconcile Linnworks totals against QBO totals. READ-ONLY. Trigger on "analyze my Linnworks
   and QuickBooks data", "mapping health report", "gap analysis Linnworks QBO", "update my mapping
   workbook", "what needs my decision", or /lw-qbo-mapping.
+metadata:
+  department: "accounting"
+  domain: "integration-mapping"
+  platform: "linnworks,quickbooks"
+  owner: "satva-coe"
+  status: "stable"
+  license: "Satva-original"
+  source: "original"
 ---
 
 # Linnworks -> QuickBooks Data Mapping & Gap Analysis

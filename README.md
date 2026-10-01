@@ -22,7 +22,7 @@
 
 <b><a href="https://prafullakalu.github.io/Satva-COE-skills-agents/examples/satva-ledger-video/watch.html">▶ Click to play the full 82-second video, with sound</a></b> · <a href="examples/satva-ledger-video/Satva-Ledger-Sizzle-82s.mp4">download the MP4</a>
 
-<sub>The animation above is a silent 28-second preview; the link opens the full video in a player page. 1080p · made with <a href="skills/satva-ledger-marketing-video/SKILL.md"><code>satva-ledger-marketing-video</code></a>. Demo figures from a QuickBooks Online sandbox; voice and sound effects by <a href="https://elevenlabs.io">ElevenLabs</a>; the score is synthesised in code.</sub>
+<sub>The animation above is a silent 28-second preview; the link opens the full video in a player page. 1080p · made with <a href="skills/satva/video/satva-ledger-marketing-video/SKILL.md"><code>satva-ledger-marketing-video</code></a>. Demo figures from a QuickBooks Online sandbox; voice and sound effects by <a href="https://elevenlabs.io">ElevenLabs</a>; the score is synthesised in code.</sub>
 
 </div>
 
@@ -36,17 +36,37 @@
 
 ## What's inside
 
-Five [Claude Code skills](https://docs.claude.com/en/docs/claude-code/skills). Install them once and Claude picks the right one from what you ask.
+**138 skills and 16 agents**, organised by department, one source of truth for the whole organisation. Pick the job,
+find the skill, and see which agent already uses it in the generated [**`CATALOG.md`**](CATALOG.md).
+
+| Department | Skills | What is in it |
+|---|---|---|
+| [`accounting/core`](skills/accounting/core/) | 33 | Platform-neutral practice: setup, capture, journals, reconciliation, AP/AR, close, reporting, tax support, payroll, controls, audit, consolidation, revenue, inventory, forecasting |
+| [`accounting/platforms`](skills/accounting/platforms/) | 44 | Doing the job inside one system with its real tools: linnworks 7 · quickbooks 12 · shopify 5 · stripe 3 · xero 12 · zoho-books 5 |
+| [`marketing`](skills/marketing/) | 28 | Strategy, content, brand, social, email, ads, conversion, launch, sales enablement, launch video |
+| [`seo`](skills/seo/) | 27 | Technical, analytics, local, keywords, content, authority, AI-search visibility |
+| [`satva`](skills/satva/) | 6 | Satva house formats: documents, guides, decks, product video, how Satva runs accounting work |
+
+Agents ([`agents/`](agents/)) are ready-made roles that each lean on a set of these skills: bookkeeper, controller,
+tax support, client onboarding, QuickBooks / Xero / Zoho Books / Stripe specialists, e-commerce accountant, marketing
+strategist, content writer, growth marketer, SEO auditor, SEO content strategist, launch-video producer and Satva document
+producer. See [`agents/README.md`](agents/README.md) for "which one do I use?".
+
+- **Developers:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) is the contract (layout, skill format, licence policy, Obot).
+- **Obot:** add this repository as **one** skill source; everything Obot indexes is under `skills/`.
+- **Quality:** each skill is `stable` (used in real work) or `beta` (written and reviewed, not yet exercised on a live system). Most new skills start as `beta`.
+
+Anybody or any organisation can use them (MIT). To use your own logo and colours, see [Make it your own brand](#make-it-your-own-brand).
+
+### Satva house skills in detail
 
 | Skill | Produces | For whom | Say something like |
 |---|---|---|---|
-| 📘 **[`satva-guide-gif`](skills/satva-guide-gif/SKILL.md)** | Annotated screenshots · narrated demo **GIF** · branded A4 **PDF** guide | End users and clients of a shipped feature | *"Create a setup guide PDF and demo GIF for the billing feature."* |
-| 📝 **[`satva-doc`](skills/satva-doc/SKILL.md)** | Brief plain-black Word **`.doc`** | Your own team — handovers, "how we built it" | *"Write a satva doc explaining how the sync works."* |
-| 🎬 **[`feature-launch-video`](skills/feature-launch-video/SKILL.md)** | Marketing / launch **video** (MP4) with original voice, music and SFX | Prospects and customers | *"Make a 30-second launch video for our bank-import feature."* |
-| 🎞️ **[`satva-ledger-marketing-video`](skills/satva-ledger-marketing-video/SKILL.md)** | The full **82-second sizzle** for the Satva Ledger accounting agent — a reference pipeline to fork | Marketing team | *"Rebuild the Satva Ledger sizzle video."* · *"Make a hero video like it for our next product."* |
-| 📊 **[`lw-qbo-mapping`](skills/lw-qbo-mapping/README.md)** | Per-client Excel workbook: Linnworks ↔ QuickBooks product mapping, gaps and decisions the accountant approves in Excel | Accountants reconciling ecommerce inventory to QuickBooks | *"Update the Coins of America mapping workbook."* |
-
-Anybody or any organisation can use them (MIT). To use your own logo and colours, see [Make it your own brand](#make-it-your-own-brand).
+| 📘 **[`satva-guide-gif`](skills/satva/docs/satva-guide-gif/SKILL.md)** | Annotated screenshots · narrated demo **GIF** · branded A4 **PDF** guide | End users and clients of a shipped feature | *"Create a setup guide PDF and demo GIF for the billing feature."* |
+| 📝 **[`satva-doc`](skills/satva/docs/satva-doc/SKILL.md)** | Brief plain-black Word **`.doc`** | Your own team — handovers, "how we built it" | *"Write a satva doc explaining how the sync works."* |
+| 🎬 **[`feature-launch-video`](skills/marketing/video/feature-launch-video/SKILL.md)** | Marketing / launch **video** (MP4) with original voice, music and SFX | Prospects and customers | *"Make a 30-second launch video for our bank-import feature."* |
+| 🎞️ **[`satva-ledger-marketing-video`](skills/satva/video/satva-ledger-marketing-video/SKILL.md)** | The full **82-second sizzle** for the Satva Ledger accounting agent — a reference pipeline to fork | Marketing team | *"Rebuild the Satva Ledger sizzle video."* · *"Make a hero video like it for our next product."* |
+| 📊 **[`lw-qbo-mapping`](skills/accounting/platforms/linnworks/lw-qbo-mapping/README.md)** | Per-client Excel workbook: Linnworks ↔ QuickBooks product mapping, gaps and decisions the accountant approves in Excel | Accountants reconciling ecommerce inventory to QuickBooks | *"Update the Coins of America mapping workbook."* |
 
 ---
 
@@ -58,7 +78,7 @@ Anybody or any organisation can use them (MIT). To use your own logo and colours
 | **Annotated screenshot** — numbered rings, 2880 × 1800 | <img src="docs/img/s01-approve.png" alt="Screenshot with numbered rings" width="420"> |
 | **Finished PDF** — banner, footer, cover, Version History<br>[`Satva-Guide-Sample.pdf`](examples/setup-guide-sample/Satva-Guide-Sample.pdf) | <img src="docs/img/pdf-cover.png" alt="PDF cover page" width="300"> |
 
-Also in [`examples/`](examples/): the [Satva Ledger marketing video](examples/satva-ledger-video/) (preview and link at the top of this page), a [`satva-doc` sample](examples/satva-doc-sample/How-The-Guide-Pipeline-Works.doc) and two video briefs in [`skills/feature-launch-video/examples/`](skills/feature-launch-video/examples/).
+Also in [`examples/`](examples/): the [Satva Ledger marketing video](examples/satva-ledger-video/) (preview and link at the top of this page), a [`satva-doc` sample](examples/satva-doc-sample/How-The-Guide-Pipeline-Works.doc) and two video briefs in [`skills/marketing/video/feature-launch-video/examples/`](skills/marketing/video/feature-launch-video/examples/).
 
 ---
 
@@ -73,7 +93,7 @@ Point it at a **locally running app seeded with fake data** and it produces thre
 - **Storyboard** — a 2 × 3 contact sheet of the GIF's six most distinct frames, embedded at the end of the PDF.
 - **House-format PDF** — Satva blue banner on every page, contact footer with `Page N of M`, Mulish typography, cover page with a Version History table, tip and warning boxes, blue-header tables, figure captions.
 - **Safety rails baked in** — never film a third party's UI (cut to an illustration page instead), never show a real secret, never invent a URL, error strings copied from source.
-- **A written standard, not folklore** — screenshot size, ring and border style, page geometry, type scale and colours are all specified in [`SKILL.md`](skills/satva-guide-gif/SKILL.md#the-house-standard-the-numbers).
+- **A written standard, not folklore** — screenshot size, ring and border style, page geometry, type scale and colours are all specified in [`SKILL.md`](skills/satva/docs/satva-guide-gif/SKILL.md#the-house-standard-the-numbers).
 
 | Standard | Value |
 |---|---|
@@ -112,7 +132,7 @@ the generator and the voice script.
 
 - **Generator, not hand-written HTML** — `build-sizzle.mjs` builds the whole HyperFrames composition (scenes, timings, cues) from data; `sizzle-mascot.mjs` is the original SVG mascot (moods, bob, blink, wave, hop).
 - **Audio pipeline** — 25 ElevenLabs voice lines placed so key words land on visual beats, custom SFX, an **original score synthesised in code** (115 BPM), a mix that ducks music under speech and masters to −14 LUFS, and `analyze.py` for measured QA.
-- **Marketing-safety docs** — the approved-claims list and the beat sheet ([`docs/`](skills/satva-ledger-marketing-video/docs/)).
+- **Marketing-safety docs** — the approved-claims list and the beat sheet ([`docs/`](skills/satva/video/satva-ledger-marketing-video/docs/)).
 - **Deliberately not included:** the rendered MP4s and audio (made on a free ElevenLabs plan — non-commercial). Regenerate with your own key.
 
 | Pick this one when… | Skill |
@@ -142,6 +162,9 @@ cd Satva-COE-skills-agents
 ```
 
 ### 2 · Install the skills into Claude Code
+
+Skills are nested by department in the repo; the installers flatten them into Claude Code's skills folder. Install everything, or only what you need: `--dept accounting,seo`, `--only xero-month-end-close`, `--agents` to add the agents too, `--list` to see what is available (PowerShell: `-Dept`, `-Only`, `-Agents`, `-List`).
+
 
 **Windows (PowerShell)**
 
@@ -186,7 +209,7 @@ It should list `satva-guide-gif`, `satva-doc`, `feature-launch-video` and `satva
 
 > *"Create a Satva setup guide PDF and a narrated demo GIF for the **Connect store** flow. The app is at http://localhost:8080 — use the demo tenant."*
 
-Claude follows [`SKILL.md`](skills/satva-guide-gif/SKILL.md): seeds demo data, captures ringed screenshots, films the GIF, writes the body HTML and builds the PDF.
+Claude follows [`SKILL.md`](skills/satva/docs/satva-guide-gif/SKILL.md): seeds demo data, captures ringed screenshots, films the GIF, writes the body HTML and builds the PDF.
 
 **Or run the working example yourself** to see every stage:
 
@@ -246,7 +269,7 @@ npx hyperframes@0.8.58 render -o renders/picture.mp4 -f 30 -q looks -w 1     # 4
 ffmpeg -i renders/picture.mp4 -i final/audio_final.wav -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 256k renders/final.mp4
 ```
 
-`brief.json` fields are documented in [`references/brief-schema.md`](skills/feature-launch-video/references/brief-schema.md). Free-plan ElevenLabs audio is non-commercial and needs an "elevenlabs.io" credit — check your plan before publishing.
+`brief.json` fields are documented in [`references/brief-schema.md`](skills/marketing/video/feature-launch-video/references/brief-schema.md). Free-plan ElevenLabs audio is non-commercial and needs an "elevenlabs.io" credit — check your plan before publishing.
 
 ### D · Fork the Satva Ledger sizzle for your next product
 
@@ -261,7 +284,7 @@ python ../audio-pipeline/music.py                # original score, no API key ne
 ```
 
 Then edit the story in `build-sizzle.mjs` and the voice lines in `audio-pipeline/gen_voice.py`, and follow the
-[full steps](skills/satva-ledger-marketing-video/SKILL.md#steps) (render, voice, SFX, mix, mux).
+[full steps](skills/satva/video/satva-ledger-marketing-video/SKILL.md#steps) (render, voice, SFX, mix, mux).
 
 ---
 
@@ -269,12 +292,12 @@ Then edit the story in `build-sizzle.mjs` and the voice lines in `audio-pipeline
 
 The Satva look is defined by a handful of files. To use another organisation's identity:
 
-1. Replace `skills/satva-guide-gif/assets/satva-header.png` and `satva-footer.png` with your banner and footer bar (same proportions).
-2. Swap `#0080C6` in `skills/satva-guide-gif/scripts/build-pdf.mjs`, and the "Satva Solutions" strings on the cover.
+1. Replace `skills/satva/docs/satva-guide-gif/assets/satva-header.png` and `satva-footer.png` with your banner and footer bar (same proportions).
+2. Swap `#0080C6` in `skills/satva/docs/satva-guide-gif/scripts/build-pdf.mjs`, and the "Satva Solutions" strings on the cover.
 3. Optionally change the ring/badge colour in `scripts/callouts.mjs`, and the fonts (Mulish and Roboto Mono are OFL — keep or replace).
 4. For video, set `brand` in your `brief.json` (accent, ink, paper, font, logo path).
 
-Full details: [Rebranding](skills/satva-guide-gif/SKILL.md#rebranding-for-another-organisation).
+Full details: [Rebranding](skills/satva/docs/satva-guide-gif/SKILL.md#rebranding-for-another-organisation).
 
 ---
 
@@ -282,31 +305,20 @@ Full details: [Rebranding](skills/satva-guide-gif/SKILL.md#rebranding-for-anothe
 
 ```
 Satva-COE-skills-agents/
-├── install.ps1 · install.sh          one-command installers (Windows · macOS/Linux)
-├── skills/
-│   ├── satva-guide-gif/
-│   │   ├── SKILL.md                  the workflow + the written house standard
-│   │   ├── scripts/                  callouts.mjs · cursor-demo.mjs · build-gif.py · build-pdf.mjs
-│   │   ├── assets/                   SATVA header/footer, Mulish, Roboto Mono (+ OFL licences)
-│   │   ├── starter/                  a working project to copy: capture · frames · build · body · doc.json
-│   │   └── examples/                 neutral illustration pages + a complete guide body
-│   ├── satva-doc/SKILL.md            the internal .doc house style
-│   ├── feature-launch-video/
-│   │   ├── SKILL.md                  7-step workflow, rules, limits
-│   │   ├── scripts/                  compose.mjs · icons · mascot · audio/ (voice, sfx, music, mix, analyze)
-│   │   ├── themes/                   ledger-clean · cinematic-dark · mascot-playful
-│   │   ├── references/               brief schema · why no copyrighted audio
-│   │   └── examples/                 bank-import (16:9) · smart-nudges (9:16) briefs
-│   └── satva-ledger-marketing-video/
-│       ├── SKILL.md                  the sizzle pipeline: steps, forking guide, rules
-│       ├── pipeline/video-build/     build-sizzle.mjs · sizzle-mascot.mjs · composition scaffold
-│       ├── pipeline/audio-pipeline/  voice · sfx · original score · mix · QA
-│       └── docs/                     approved claims · beat sheet
-├── examples/
-│   ├── setup-guide-sample/           the finished PDF, GIF, storyboard, screenshots + sources
-│   ├── satva-ledger-video/           the 82 s Satva Ledger marketing video (MP4) + preview GIF
-│   └── satva-doc-sample/             a sample internal .doc
-└── docs/img/                         README images
+├── install.ps1 · install.sh          installers (nested-aware: --dept, --only, --agents, --list)
+├── CATALOG.md                        GENERATED: department → skill → agent
+├── skills/                           the ONLY place a SKILL.md may exist (Obot indexes this)
+│   ├── accounting/
+│   │   ├── core/<skill>/             platform-neutral practice
+│   │   └── platforms/<platform>/<skill>/   quickbooks · xero · linnworks · shopify · zoho-books · stripe
+│   ├── marketing/<group>/<skill>/    strategy · content · brand · social · email · ads · cro · launch · sales · video
+│   ├── seo/<group>/<skill>/          technical · analytics · local · keywords · content · authority · ai-search
+│   └── satva/<group>/<skill>/        docs · video · practice · presentations (house skills)
+├── agents/<department>/<agent>.md    roles, each listing the skills it uses
+├── scripts/validate.py               validator + catalog generator (run by CI)
+├── .github/workflows/validate.yml    CI: fails the PR on anything Obot would show as invalid
+├── examples/                         the finished sample PDF, GIF, doc and 82 s video
+└── docs/                             ARCHITECTURE.md · SOURCES.md · img/
 ```
 
 ---

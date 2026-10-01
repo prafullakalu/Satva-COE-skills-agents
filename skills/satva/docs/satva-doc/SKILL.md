@@ -1,6 +1,13 @@
 ---
 name: satva-doc
 description: Write a brief INTERNAL Word document (.doc) in the Satva house style — Mulish body, Roboto Mono code, pure black, no colour anywhere — that explains in plain language how something was built or how a mechanism works. Use for implementation write-ups, handover notes, "explain what we did and where it lives", or when asked for a "satva doc" / a brief Word document. NOT for client-facing setup guides (use satva-guide-gif) and NOT for marketing video (use feature-launch-video).
+metadata:
+  department: "satva"
+  domain: "docs"
+  owner: "satva-coe"
+  status: "stable"
+  license: "Satva-original"
+  source: "original"
 ---
 
 # Satva doc (internal house style)
